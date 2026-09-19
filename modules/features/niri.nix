@@ -14,7 +14,7 @@
         binds = {
           "Mod+T".spawn-sh = lib.getExe pkgs.kitty;
           "Mod+Q".close-window = {};
-          "Mod+Y".spawn-sh = lib.getExe pkgs.yazi;
+          "Mod+Y".spawn-sh = lib.getExe pkgs.kitty + " " + pkgs.yazi;
           "Mod+B".spawn-sh = lib.getExe pkgs.firefox;
         };
       };

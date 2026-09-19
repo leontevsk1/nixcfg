@@ -81,6 +81,7 @@
   # Install firefox.
   programs.firefox.enable = true;
   programs.throne.enable = true;
+  programs.yazi.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
