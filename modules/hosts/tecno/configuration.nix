@@ -110,6 +110,7 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
@@ -123,6 +124,7 @@
     bat
     zoxide # zsh: smart cd
     starship # zsh: prompt
+    fcitx5 # im-switch.nvim: авто-раскладка в nvim (fcitx5-remote)
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
   ];
@@ -132,7 +134,6 @@
   environment.variables.TERMINAL = "kitty";
   
   # Курсорная тема (общесистемно: niri-сессии, X11-приложения)
-  environment.systemPackages = [ pkgs.breeze-hacked-cursor-theme ];
   environment.variables.XCURSOR_THEME = "Breeze_Hacked";
   environment.variables.XCURSOR_SIZE = "24";
   environment.pathsToLink = [ "/share/icons" ];
@@ -148,6 +149,13 @@
 
   fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
   fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono Nerd Font" ];
+
+  # Fcitx5 — деман переключения раскладок (нужен im-switch.nvim; сам ввод
+  # по-прежнему handled niri xkb + noctalia)
+  i18n.inputMethod = {
+    type = "fcitx5";
+    fcitx5.addons = [ pkgs.fcitx5-configtool ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
