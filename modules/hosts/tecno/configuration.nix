@@ -1,5 +1,5 @@
 { self, inputs, ... }: {
-    flake.nixosModules.tecnoConfiguration = { config, pkgs, ... }:
+    flake.nixosModules.tecnoConfiguration = { config, pkgs, lib, ... }:
 
 {
   imports =
@@ -46,6 +46,33 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Создаем пользователя для греедера, если он еще не задан
+  users.users.greeter = {
+    isNormalUser = false;
+    extraGroups = [ "seat" ];
+  };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        user = "greeter";
+        command = let
+          # Путь к директориям сессий (Wayland/X11), чтобы tuigreet видел ваши DE/WM
+          sessionsDir = "${config.services.displayManager.sessionData.desktops}/share";
+        in ''
+          ${lib.getExe pkgs.tuigreet} \
+            --time \
+            --asterisks \
+            --remember \
+            --remember-user-session \
+            --user-menu \
+            --sessions ${sessionsDir}/wayland-sessions \
+            --xsessions ${sessionsDir}/xsessions
+        '';
+      };
+    };
+  };
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -57,6 +84,8 @@
     # If you want to use JACK applications, uncomment this
     # jack.enable = true;
   };
+
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput = {
