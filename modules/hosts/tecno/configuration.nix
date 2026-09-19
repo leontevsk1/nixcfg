@@ -114,6 +114,13 @@
     wget
     kitty
     eza
+    tree-sitter # nvim-treesitter (branch main): компиляция парсеров
+    gcc # tree-sitter: сборка C-расширений парсеров
+    nodejs # некоторые плагины nvim хотят node
+    ripgrep
+    fzf
+    fd
+    bat
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
   ];
