@@ -95,7 +95,7 @@
   };
 
   programs.zsh.enable = true;
-  environment.etc."zshenv.d/nixos-zdotdir.zsh".text = ''
+  programs.zsh.shellInit = ''
     # radleylewis/zsh expects its config in XDG_CONFIG_HOME/zsh
     export ZDOTDIR="$HOME/.config/zsh"
   '';
