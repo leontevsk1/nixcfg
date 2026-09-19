@@ -125,6 +125,8 @@
     git
   ];
 
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
   environment.variables.TERMINAL = "kitty";
   
   fonts.fontconfig.enable = true;
