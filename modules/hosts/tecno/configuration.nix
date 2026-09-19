@@ -88,16 +88,18 @@
     isNormalUser = true;
     description = "leont";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
     #  thunderbird
     ];
   };
 
+  programs.zsh.enable = true;
+
   # Install firefox.
   programs.firefox.enable = true;
   programs.throne.enable = true;
   programs.yazi.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -107,6 +109,7 @@
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
+    eza
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
   ];
