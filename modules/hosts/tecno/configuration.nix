@@ -115,6 +115,7 @@
     fcitx5 # im-switch.nvim: авто-раскладка в nvim (fcitx5-remote)
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
+    nautilus
   ];
 
   programs.neovim.enable = true;
