@@ -5,9 +5,7 @@
   imports =
     [ # Include the results of the hardware scan.
       self.nixosModules.tecnoHardware
-      self.nixosModules.xfce
       self.nixosModules.niri
-      self.nixosModules.cosmic
       self.nixosModules.noctalia
     ];
 
@@ -62,6 +60,8 @@
     };
   };
   # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -70,18 +70,6 @@
     # If you want to use JACK applications, uncomment this
     # jack.enable = true;
   };
-
-
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput = {
-  enable = true;
-  touchpad = {
-    tapping = true;          # Клик касанием (тап)
-    naturalScrolling = true; # Инвертированная (природная) прокрутка
-    disableWhileTyping = true; # Отключение тачпада при наборе текста
-  };
-};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."leont" = {
