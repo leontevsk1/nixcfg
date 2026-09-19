@@ -150,11 +150,40 @@
   fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
   fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono Nerd Font" ];
 
-  # Fcitx5 — деман переключения раскладок (нужен im-switch.nvim; сам ввод
-  # по-прежнему handled niri xkb + noctalia)
+  # Fcitx5 — ЕДИНЫЙ механизм раскладок во всей системе.
+  # Win+Space = переключение (TriggerKeys), us/ru в profile.
+  # niri xkb-раскладки отключены (пустая секция в dotfiles config.kdl).
   i18n.inputMethod = {
+    enable = true;
     type = "fcitx5";
-    fcitx5.addons = [ pkgs.fcitx5-configtool ];
+    fcitx5.addons = [ pkgs.qt6Packages.fcitx5-configtool ];
+    fcitx5.waylandFrontend = true;
+    fcitx5.settings = {
+      # ~/.config/fcitx5/profile: раскладки
+      inputMethod = {
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "us";
+          "DefaultIM" = "keyboard-ru";
+        };
+        "Groups/0/Items/0".Name = "keyboard-us";
+        "Groups/0/Items/1".Name = "keyboard-ru";
+        GroupOrder = {
+          "0" = "Default";
+        };
+      };
+      # ~/.config/fcitx5/config: глобальные хоткеи
+      globalOptions = {
+        Hotkey = {
+          # Win+Space — переключение раскладки
+          TriggerKeys = "Super+space";
+          EnumerateWithTriggerKeys = "True";
+          EnumerateSkipFirst = "False";
+        };
+        "Hotkey/PrevPage" = {};
+        "Hotkey/NextPage" = {};
+      };
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
