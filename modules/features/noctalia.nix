@@ -1,6 +1,6 @@
-{ ... }: {
-  flake.nixosModules.noctalia = { pkgs, ... }: {
-    # Noctalia shell — обычный пакет, настройка через его родной GUI
-    environment.systemPackages = [ pkgs.noctalia-shell ];
+{ pkgs, ... }: {
+  flake.nixosModules.noctalia = {
+    # Noctalia (v5) — shell + CLI в одном пакете; настройка через его GUI
+    environment.systemPackages = [ pkgs.noctalia ];
   };
 }
