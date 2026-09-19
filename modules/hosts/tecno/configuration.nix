@@ -108,7 +108,7 @@
   ];
 
   fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
-  fonts.fontconfig.defaultFonts.monospace = ["jetbrains-mono"];
+  fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono Nerd Font" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
