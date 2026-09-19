@@ -58,12 +58,6 @@
       };
     };
   };
-
-  # tuigreet запускает X11-сессии через startx, которого нет в PATH юнита
-  systemd.services.greetd.path = with pkgs; [
-    xorg.startx
-    xorg.xauth
-  ];
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
