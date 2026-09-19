@@ -16,7 +16,6 @@
           layout.gaps = 5;
 
           spawn-at-startup = [ "noctalia-shell" ];
-
           binds = {
             "Mod+T".spawn-sh = lib.getExe pkgs.kitty;
             "Mod+Q".close-window = {};

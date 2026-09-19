@@ -1,7 +1,6 @@
-{ self, inputs, ... }: {
-    perSystem = { pkgs, ... }: {
-	packages.myNoctalia = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
-	    settings = {};
-	};
-    };
-} 
+{ ... }: {
+  flake.nixosModules.noctalia = { pkgs, ... }: {
+    # Noctalia shell — обычный пакет, настройка через его родной GUI
+    environment.systemPackages = [ pkgs.noctalia-shell ];
+  };
+}

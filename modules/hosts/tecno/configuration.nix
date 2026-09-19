@@ -8,6 +8,7 @@
       self.nixosModules.xfce
       self.nixosModules.niri
       self.nixosModules.cosmic
+      self.nixosModules.noctalia
     ];
 
   # Use the systemd-boot EFI boot loader.
