@@ -5,6 +5,7 @@
   imports =
     [ # Include the results of the hardware scan.
       self.nixosModules.tecnoHardware
+      self.nixosModules.xfce
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -40,19 +41,6 @@
     LC_PAPER = "ru_RU.UTF-8";
     LC_TELEPHONE = "ru_RU.UTF-8";
     LC_TIME = "ru_RU.UTF-8";
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us,ru";
-    options = "grp:win_space_toggle";
   };
 
   # Enable CUPS to print documents.
