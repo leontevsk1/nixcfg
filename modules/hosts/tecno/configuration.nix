@@ -129,9 +129,15 @@
   programs.neovim.defaultEditor = true;
   environment.variables.TERMINAL = "kitty";
   
+  # Курсорная тема (общесистемно: niri-сессии, X11-приложения)
+  environment.variables.XCURSOR_THEME = "Breeze_Hacked";
+  environment.variables.XCURSOR_SIZE = "24";
+  environment.pathsToLink = [ "/share/icons" ];
+
   fonts.fontconfig.enable = true;
 
   fonts.packages = with pkgs; [
+    breeze-hacked-cursor-theme
     nerd-fonts.fira-code
     nerd-fonts.droid-sans-mono
     nerd-fonts.jetbrains-mono
