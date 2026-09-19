@@ -92,6 +92,18 @@
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
   ];
+  
+  fonts.fontconfig.enable = true;
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.jetbrains-mono
+    inter
+  ];
+
+  fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
+  fonts.fontconfig.defaultFonts.monospace = ["jetbrains-mono"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
