@@ -90,9 +90,12 @@
   environment.systemPackages = with pkgs; [
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    kitty
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
   ];
+
+  environment.variables.TERMINAL = "kitty";
   
   fonts.fontconfig.enable = true;
 
