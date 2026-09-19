@@ -6,6 +6,8 @@
     [ # Include the results of the hardware scan.
       self.nixosModules.tecnoHardware
       self.nixosModules.xfce
+      self.nixosModules.niri
+      self.nixosModules.cosmic
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -59,8 +61,6 @@
     };
   };
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
