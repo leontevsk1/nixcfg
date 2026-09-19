@@ -116,13 +116,43 @@
     inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     git
     nautilus
+    adw-gtk3 # GTK тема (тёмная, синхронизирована с noctalia)
+    papirus-icon-theme # иконки (Papirus-Dark)
   ];
 
   programs.neovim.enable = true;
   programs.neovim.defaultEditor = true;
   environment.variables.TERMINAL = "kitty";
   
-  # Курсорная тема (общесистемно: niri-сессии, X11-приложения)
+  # GTK/QT — синхронизация с Noctalia (adw-gtk3-dark + Papirus-Dark + Inter, Breeze_Hacked курсор)
+  # NixOS-модулей типа gtk.gtk3 нет (это опции home-manager), поэтому
+  # settings.ini GTK3/GTK4 генерируем сами — их читают все GTK-приложения.
+  environment.etc."xdg/gtk-3.0/settings.ini".text = ''
+    [Settings]
+    gtk-theme-name=adw-gtk3-dark
+    gtk-icon-theme-name=Papirus-Dark
+    gtk-font-name=Inter 11
+    gtk-cursor-theme-name=Breeze_Hacked
+    gtk-cursor-theme-size=24
+    gtk-application-prefer-dark-theme=1
+    gtk-xft-antialias=1
+    gtk-xft-hinting=1
+    gtk-xft-hintstyle=hintslight
+    gtk-xft-rgba=rgb
+  '';
+  environment.etc."xdg/gtk-4.0/settings.ini".text = ''
+    [Settings]
+    gtk-theme-name=adw-gtk3-dark
+    gtk-icon-theme-name=Papirus-Dark
+    gtk-font-name=Inter 11
+    gtk-cursor-theme-name=Breeze_Hacked
+    gtk-cursor-theme-size=24
+    gtk-application-prefer-dark-theme=1
+  '';
+  programs.dconf.enable = true;
+  environment.variables.GTK_THEME = "adw-gtk3-dark";
+
+  # Cursor theme (system-wide: niri sessions, X11 apps)
   environment.variables.XCURSOR_THEME = "Breeze_Hacked";
   environment.variables.XCURSOR_SIZE = "24";
   environment.pathsToLink = [ "/share/icons" ];
