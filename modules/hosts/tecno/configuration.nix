@@ -135,6 +135,7 @@
     nautilus
     adw-gtk3 # GTK тема (тёмная, синхронизирована с noctalia)
     papirus-icon-theme # иконки (Papirus-Dark)
+    fastfetch
   ];
 
   programs.neovim.enable = true;
