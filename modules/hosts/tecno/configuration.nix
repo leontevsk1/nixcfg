@@ -100,6 +100,9 @@
   environment.systemPackages = with pkgs; [
     breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
     kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
+    qt5ct # Qt5-приложения: тема через QT_QPA_PLATFORMTHEME
+    qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
+    yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
@@ -152,6 +155,8 @@
   '';
   programs.dconf.enable = true;
   environment.variables.GTK_THEME = "adw-gtk3-dark";
+  # Список через ';' поддерживается Qt>=5.9: Qt5 берёт qt5ct, Qt6 — qt6ct
+  environment.variables.QT_QPA_PLATFORMTHEME = "qt5ct;qt6ct";
 
   # Cursor theme (system-wide: niri sessions, X11 apps)
   environment.variables.XCURSOR_THEME = "breeze_cursors";
