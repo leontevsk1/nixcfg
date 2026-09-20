@@ -99,6 +99,7 @@
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
+    kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
@@ -124,7 +125,7 @@
   programs.neovim.defaultEditor = true;
   environment.variables.TERMINAL = "kitty";
   
-  # GTK/QT — синхронизация с Noctalia (adw-gtk3-dark + Papirus-Dark + Inter, Breeze_Hacked курсор)
+  # GTK/QT — синхронизация с Noctalia (adw-gtk3-dark + Papirus-Dark + Inter, breeze_cursors курсор)
   # NixOS-модулей типа gtk.gtk3 нет (это опции home-manager), поэтому
   # settings.ini GTK3/GTK4 генерируем сами — их читают все GTK-приложения.
   environment.etc."xdg/gtk-3.0/settings.ini".text = ''
@@ -132,8 +133,8 @@
     gtk-theme-name=adw-gtk3-dark
     gtk-icon-theme-name=Papirus-Dark
     gtk-font-name=Inter 11
-    gtk-cursor-theme-name=Breeze_Hacked
-    gtk-cursor-theme-size=24
+    gtk-cursor-theme-name=breeze_cursors
+    gtk-cursor-theme-size=16
     gtk-application-prefer-dark-theme=1
     gtk-xft-antialias=1
     gtk-xft-hinting=1
@@ -145,16 +146,16 @@
     gtk-theme-name=adw-gtk3-dark
     gtk-icon-theme-name=Papirus-Dark
     gtk-font-name=Inter 11
-    gtk-cursor-theme-name=Breeze_Hacked
-    gtk-cursor-theme-size=24
+    gtk-cursor-theme-name=breeze_cursors
+    gtk-cursor-theme-size=16
     gtk-application-prefer-dark-theme=1
   '';
   programs.dconf.enable = true;
   environment.variables.GTK_THEME = "adw-gtk3-dark";
 
   # Cursor theme (system-wide: niri sessions, X11 apps)
-  environment.variables.XCURSOR_THEME = "Breeze_Hacked";
-  environment.variables.XCURSOR_SIZE = "24";
+  environment.variables.XCURSOR_THEME = "breeze_cursors";
+  environment.variables.XCURSOR_SIZE = "16";
   environment.pathsToLink = [ "/share/icons" ];
 
   fonts.fontconfig.enable = true;
