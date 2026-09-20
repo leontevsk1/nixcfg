@@ -1,9 +1,6 @@
 { self, inputs, ... }: {
     flake.nixosModules.tecnoConfiguration = { config, pkgs, lib, ... }:
 
-let
-  libfprint-ft9201 = pkgs.callPackage ../../../packages/libfprint-ft9201 { };
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -49,18 +46,6 @@ in
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  # Отпечаток пальца: HOLTEK/FocalTech 2808:c652 поддерживается только
-  # проприетарным TOD-сборщиком libfprint (см. packages/libfprint-ft9201).
-  # PAM НЕ включаем (ни login, ни sudo): Noctalia Lock читает сканер сама
-  # через D-Bus, а pam_fprintd в стеке login ломает пароль (noctalia #3277).
-  services.fprintd = {
-    enable = true;
-    package = pkgs.fprintd.override {
-      libfprint = libfprint-ft9201;
-    };
-  };
-  services.udev.packages = [ libfprint-ft9201 ];
 
   services.greetd = {
     enable = true;
