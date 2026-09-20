@@ -182,8 +182,11 @@
     "/share/glib-2.0"
     "/lib/qt-6/plugins"
   ];
-  # Путь к плагинам Qt вне профиля Qt-приложения (libqt6ct: platformthemes)
-  environment.variables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
+  # Путь к плагинам Qt вне профиля Qt-приложения (libqt6ct: platformthemes).
+  # Список, чтобы не конфликтовать с определением из модуля fcitx5 — NixOS смёржит.
+  environment.variables.QT_PLUGIN_PATH = [
+    "/run/current-system/sw/lib/qt-6/plugins"
+  ];
 
   fonts.fontconfig.enable = true;
 
