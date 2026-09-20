@@ -8,7 +8,6 @@
       self.nixosModules.niri
       self.nixosModules.noctalia
     ];
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -177,8 +176,10 @@
   '';
   programs.dconf.enable = true;
   environment.variables.GTK_THEME = "adw-gtk3-dark";
-  # Список через ';' поддерживается Qt>=5.9: Qt5 берёт qt5ct, Qt6 — qt6ct
-  environment.variables.QT_QPA_PLATFORMTHEME = "qt5ct;qt6ct";
+  # ВАЖНО: Qt 6.11 НЕ парсит "qt5ct;qt6ct" через ';' — вся строка не матчится
+  # с ключами плагина и платформенная тема молча не загружается (светлые окна).
+  # Все Qt-приложения в системе Qt6 → единое значение "qt6ct".
+  environment.variables.QT_QPA_PLATFORMTHEME = "qt6ct";
 
   # Cursor theme (system-wide: niri sessions, X11 apps)
   environment.variables.XCURSOR_THEME = "breeze_cursors";
