@@ -11,6 +11,15 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # Максимум 5 последних поколений в меню загрузки
+  boot.loader.systemd-boot.configurationLimit = 5;
+
+  # Сборка мусора: ежедневно удалять все, кроме 5 последних поколений
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-generations +5";
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
