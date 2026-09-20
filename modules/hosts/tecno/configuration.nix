@@ -176,6 +176,11 @@
     nerd-fonts.droid-sans-mono
     nerd-fonts.jetbrains-mono
     inter
+    # Глифы для статус-баров/интерфейсов (Noctalia, nvim, starship):
+    nerd-fonts.symbols-only # Nerd Icons (символьный шрифт)
+    material-symbols # Material Symbols
+    material-design-icons # Material Design Icons (MDI)
+    font-awesome # Font Awesome 7
   ];
 
   fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
