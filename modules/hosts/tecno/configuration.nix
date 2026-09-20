@@ -113,6 +113,9 @@
     yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
     glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
     gsettings-desktop-schemas # схемы org.gnome.*: без них gsettings падает с "No schemas installed"
+    telegram-desktop # мессенджер (Qt6)
+    bleachbit # очистка системы
+    transmission_4-qt # торрент-клиент (заодно — чистый Qt6-тест тем)
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
