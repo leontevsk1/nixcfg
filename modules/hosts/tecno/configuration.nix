@@ -99,13 +99,15 @@
   # Install firefox.
   programs.firefox.enable = true;
   programs.throne.enable = true;
-  programs.yazi.enable = true;
-  # Allow unfree packages
+  # yazi: БЕЗ programs.yazi модуля — он всегда экспортирует YAZI_CONFIG_HOME
+  # в /nix/store, из-за чего ~/.config/yazi (дотфайлы hyprdev) игнорируется.
+  # Чистый пакет читает ~/.config/yazi как обычно.
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    yazi # файловый менеджер (TOML-конфиг из ~/.config/yazi, flavors в дотфайлах)
     breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
     kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
     libsForQt5.qt5ct # Qt5-приложения: тема через QT_QPA_PLATFORMTHEME
