@@ -156,7 +156,13 @@
   # Cursor theme (system-wide: niri sessions, X11 apps)
   environment.variables.XCURSOR_THEME = "breeze_cursors";
   environment.variables.XCURSOR_SIZE = "16";
-  environment.pathsToLink = [ "/share/icons" ];
+  # pathsToLink ограничивает, какие поддиректории share попадают в профиль:
+  # без /share/themes adw-gtk3 недоступен (битые симлинки в ~/.config/gtk-4.0)
+  environment.pathsToLink = [
+    "/share/icons"
+    "/share/themes"
+    "/share/qt6ct"
+  ];
 
   fonts.fontconfig.enable = true;
 
