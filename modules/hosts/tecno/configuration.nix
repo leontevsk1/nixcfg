@@ -122,6 +122,8 @@
     loupe # просмотрщик изображений (GNOME)
     zathura # просмотрщик PDF/ps/djvu (pdf-mupdf включён по умолчанию)
     wl-clipboard # wl-copy/wl-paste: без них opencode не может вставить изображение из буфера (Ctrl+V)
+    nil # LSP-сервер для Nix (nil_ls)
+    nixfmt-rfc-style # форматтер Nix, подключается через nil
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
