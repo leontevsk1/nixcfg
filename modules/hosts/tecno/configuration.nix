@@ -103,6 +103,7 @@
     qt5ct # Qt5-приложения: тема через QT_QPA_PLATFORMTHEME
     qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
     yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
+    glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     kitty
