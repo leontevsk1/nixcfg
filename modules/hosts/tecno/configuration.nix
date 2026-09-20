@@ -2,7 +2,7 @@
     flake.nixosModules.tecnoConfiguration = { config, pkgs, lib, ... }:
 
 let
-  libfprint-ft9201 = pkgs.callPackage ../../packages/libfprint-ft9201 { };
+  libfprint-ft9201 = pkgs.callPackage ../../../packages/libfprint-ft9201 { };
 in
 {
   imports =
