@@ -47,6 +47,14 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Сенсоры для Noctalia: батарея, bluetooth, режимы питания
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   services.greetd = {
     enable = true;
     settings = {
