@@ -171,13 +171,19 @@
   # Cursor theme (system-wide: niri sessions, X11 apps)
   environment.variables.XCURSOR_THEME = "breeze_cursors";
   environment.variables.XCURSOR_SIZE = "16";
-  # pathsToLink ограничивает, какие поддиректории share попадают в профиль:
-  # без /share/themes adw-gtk3 недоступен (битые симлинки в ~/.config/gtk-4.0)
+  # pathsToLink ограничивает, какие поддиректории share/lib попадают в профиль:
+  # без /share/themes adw-gtk3 недоступен (битые симлинки в ~/.config/gtk-4.0),
+  # без /lib/qt-6/plugins не загружается libqt6ct (темы Qt), без /share/glib-2.0
+  # не видно gsettings-схем
   environment.pathsToLink = [
     "/share/icons"
     "/share/themes"
     "/share/qt6ct"
+    "/share/glib-2.0"
+    "/lib/qt-6/plugins"
   ];
+  # Путь к плагинам Qt вне профиля Qt-приложения (libqt6ct: platformthemes)
+  environment.variables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
 
   fonts.fontconfig.enable = true;
 
