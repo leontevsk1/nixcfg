@@ -30,8 +30,8 @@
         "nix-command"
         "flakes"
       ];
-      # Use latest kernel.
-      boot.kernelPackages = pkgs.linuxPackages_latest;
+      # Use latest Zen kernel.
+      boot.kernelPackages = pkgs.linuxPackages_zen;
 
       networking.hostName = "tecno"; # Define your hostname.
       # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
