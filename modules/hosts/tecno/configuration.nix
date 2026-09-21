@@ -64,16 +64,16 @@
       # Enable CUPS to print documents.
       services.printing.enable = true;
 
-  # Сенсоры для Noctalia: батарея, bluetooth, режимы питания
-  services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
+      # Сенсоры для Noctalia: батарея, bluetooth, режимы питания
+      services.upower.enable = true;
+      services.power-profiles-daemon.enable = true;
+      hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+      };
 
-  # Монтирование дисков через Nautilus (sda1 и т.д.)
-  services.udisks2.enable = true;
+      # Монтирование дисков через Nautilus (sda1 и т.д.)
+      services.udisks2.enable = true;
 
       services.greetd = {
         enable = true;
@@ -218,10 +218,10 @@
         kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
         libsForQt5.qt5ct # Qt5-приложения: тема через QT_QPA_PLATFORMTHEME
         kdePackages.qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
-    yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
-    glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
-    gvfs # монтирование дисков/сетки в Nautilus (бэкенд udisks2)
-    polkit_gnome # polkit-агент: диалоги авторизации (монтирование, systemd), стартует из niri
+        yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
+        glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
+        gvfs # монтирование дисков/сетки в Nautilus (бэкенд udisks2)
+        polkit_gnome # polkit-агент: диалоги авторизации (монтирование, systemd), стартует из niri
         gsettings-desktop-schemas # схемы org.gnome.*: без них gsettings падает с "No schemas installed"
         telegram-desktop # мессенджер (Qt6)
         bleachbit # очистка системы
@@ -257,6 +257,7 @@
         lazygit
         btop
         super-productivity
+        chromium
       ];
 
       programs.neovim.enable = true;
@@ -302,14 +303,14 @@
       # без /share/themes adw-gtk3 недоступен (битые симлинки в ~/.config/gtk-4.0),
       # без /lib/qt-6/plugins не загружается libqt6ct (темы Qt), без /share/glib-2.0
       # не видно gsettings-схем
-  environment.pathsToLink = [
-    "/share/icons"
-    "/share/themes"
-    "/share/qt6ct"
-    "/share/glib-2.0"
-    "/lib/qt-6/plugins"
-    "/libexec" # polkit-gnome-агент
-  ];
+      environment.pathsToLink = [
+        "/share/icons"
+        "/share/themes"
+        "/share/qt6ct"
+        "/share/glib-2.0"
+        "/lib/qt-6/plugins"
+        "/libexec" # polkit-gnome-агент
+      ];
       # Путь к плагинам Qt вне профиля Qt-приложения (libqt6ct: platformthemes).
       # Список, чтобы не конфликтовать с определением из модуля fcitx5 — NixOS смёржит.
       environment.variables.QT_PLUGIN_PATH = [
