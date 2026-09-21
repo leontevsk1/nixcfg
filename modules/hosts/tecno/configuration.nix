@@ -129,9 +129,12 @@
       # List packages installed in system profile.
       # You can use https://search.nixos.org/ to find more packages (and options).
       environment.systemPackages = with pkgs; [
-        python3.withPackages (ps: with ps; [
+        python3.withPackages
+        (
+          ps: with ps; [
             psutil
-            ]))
+          ]
+        )
         yazi # файловый менеджер (TOML-конфиг из ~/.config/yazi, flavors в дотфайлах)
         breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
         kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
