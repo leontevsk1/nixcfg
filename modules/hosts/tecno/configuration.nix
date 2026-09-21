@@ -121,30 +121,31 @@
       # Install firefox.
       # Firefox: декларативная приватность (Enterprise Policies, applied at each start).
       # Философия: без урезания функционала — cookies НЕ чистятся, звонки/загрузки работают.
+      # Ключи с точками — ОБЯЗАТЕЛЬНО в кавычках (иначе Nix строит вложенные attrsets).
       programs.firefox = {
         enable = true;
         preferencesStatus = "user";
-        "preferences" = {
+        preferences = {
           # --- Телеметрия и отправка данных ---
           "toolkits.telemetry.unified" = false;
           "toolkits.telemetry.enabled" = false;
           "datareporting.policy.dataSubmissionEnabled" = false;
           "datareporting.healthreport.uploadEnabled" = false;
-          browser.ping-centre.telemetry = false;
-          browser.newtabpage.activity-stream.feeds.telemetry = false;
-          browser.newtabpage.activity-stream.telemetry = false;
-          browser.newtabpage.activity-stream.healthreport.uploadEnabled = false;
+          "browser.ping-centre.telemetry" = false;
+          "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+          "browser.newtabpage.activity-stream.telemetry" = false;
+          "browser.newtabpage.activity-stream.healthreport.uploadEnabled" = false;
           "app.shield.optoutstudies.enabled" = false;
           "app.normandy.enabled" = false;
           "app.normandy.api_url" = "";
           "browser.discovery.enabled" = false;
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
-          browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features = false;
-          browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons = false;
+          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
 
           # --- Спонсорский контент и рекомендации ---
-          browser.newtabpage.activity-stream.showSponsored = false;
-          browser.newtabpage.activity-stream.showSponsoredTopSites = false;
+          "browser.newtabpage.activity-stream.showSponsored" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.urlbar.quicksuggest.dataCollection.enabled" = false;
           "browser.urlbar.suggest.quicksuggest.sponsored" = false;
           "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
@@ -153,12 +154,12 @@
           "browser.urlbar.speculativeConnect.enabled" = false;
           "browser.urlbar.suggest.searches" = false; # подсказки поиска в адресной строке
           "browser.search.suggest.enabled" = false;
-          network.prefetch-next = false;
+          "network.prefetch-next" = false;
           "network.dns.disablePrefetch" = true;
           "network.predictor.enabled" = false;
-          network.http.speculative-parallel-limit = 0;
-          network.connectivity-service.enabled = false;
-          network.captive-portal-service.enabled = false; # авто-детект captive wifi выключен
+          "network.http.speculative-parallel-limit" = 0;
+          "network.connectivity-service.enabled" = false;
+          "network.captive-portal-service.enabled" = false; # авто-детект captive wifi выключен
           "browser.region.update.enabled" = false;
 
           # --- SafeBrowsing: локальная защита остаётся, отправка URL/files в Google — нет ---
@@ -188,10 +189,10 @@
           "browser.sessionstore.privacy_level" = 2; # формы в session restore не пишутся
           "privacy.globalprivacycontrol.enabled" = true; # GPC-сигнал
           "privacy.globalprivacycontrol.webexposed" = true;
-          network.auth.subresource-http-auth-allow = 1;
+          "network.auth.subresource-http-auth-allow" = 1;
           "extensions.pocket.enabled" = false;
 
-          # --- ETP Strict (трекеры, Fingerprinting-защита браузерная) ---
+          # --- ETP Strict (трекеры, браузерная антифингерпринт-защита) ---
           "browser.contentblocking.category" = "strict";
         };
       };
