@@ -231,7 +231,7 @@
         zathura # просмотрщик PDF/ps/djvu (pdf-mupdf включён по умолчанию)
         wl-clipboard # wl-copy/wl-paste: без них opencode не может вставить изображение из буфера (Ctrl+V)
         nil # LSP-сервер для Nix (nil_ls)
-        nixfmt-rfc-style # форматтер Nix, подключается через nil
+        nixfmt # форматтер Nix, подключается через nil
         brightnessctl # биндинги XF86MonBrightness в niri ссылаются на него
         wev # Wayland event viewer: отладка Fn-клавиш
         neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -258,6 +258,7 @@
         btop
         super-productivity
         chromium
+        typst
       ];
 
       programs.neovim.enable = true;
