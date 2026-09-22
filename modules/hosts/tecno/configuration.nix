@@ -259,6 +259,7 @@
         super-productivity
         chromium
         typst
+        ddcutil
       ];
 
       programs.neovim.enable = true;
