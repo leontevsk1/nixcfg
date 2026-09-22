@@ -43,6 +43,8 @@
       # Enable networking
       networking.networkmanager.enable = true;
 
+      networking.enableIPv6 = false;
+      boot.kernelParams = [ "ipv6.disable=1" ];
       # Set your time zone.
       time.timeZone = "Asia/Krasnoyarsk";
 
