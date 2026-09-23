@@ -262,7 +262,7 @@
         chromium
         typst
         ddcutil
-        zed
+        zed-editor
       ];
 
       programs.neovim.enable = true;
