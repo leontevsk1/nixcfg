@@ -262,6 +262,7 @@
         chromium
         typst
         ddcutil
+        zed
       ];
 
       programs.neovim.enable = true;
@@ -333,6 +334,7 @@
         material-symbols # Material Symbols
         material-design-icons # Material Design Icons (MDI)
         font-awesome # Font Awesome 7
+        corefonts
       ];
 
       fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
