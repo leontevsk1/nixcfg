@@ -63,6 +63,13 @@
         LC_TIME = "ru_RU.UTF-8";
       };
 
+      # Enable i2c bus
+      hardware.i2c.enable = true;
+      boot.kernelModules = [ "i2c-dev" ];
+
+      # Add user to i2c group
+      users.groups.i2c.members = [ "yourusername" ];
+
       # Enable CUPS to print documents.
       services.printing.enable = true;
 
