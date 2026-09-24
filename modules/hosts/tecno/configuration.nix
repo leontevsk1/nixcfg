@@ -241,6 +241,10 @@
         wl-clipboard # wl-copy/wl-paste: без них opencode не может вставить изображение из буфера (Ctrl+V)
         nil # LSP-сервер для Nix (nil_ls)
         nixfmt # форматтер Nix, подключается через nil
+        nixd # LSP-сервер для Nix: Serena MCP требует именно nixd (nil остаётся за nvim)
+        lua-language-server # LSP Lua: Serena (fallback к авто-качаемому)
+        gopls # LSP Go: Serena требует установленный gopls
+        gh # GitHub CLI: для агентов (GitHub-MCP отвергнут в пользу CLI — у моделей лучше данные на gh)
         brightnessctl # биндинги XF86MonBrightness в niri ссылаются на него
         wev # Wayland event viewer: отладка Fn-клавиш
         neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
