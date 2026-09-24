@@ -270,6 +270,7 @@
         typst
         ddcutil
         zed-editor
+        libreoffice
       ];
 
       programs.neovim.enable = true;
