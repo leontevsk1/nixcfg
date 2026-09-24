@@ -261,7 +261,7 @@
         zoxide # zsh: smart cd
         starship # zsh: prompt
         fcitx5 # im-switch.nvim: авто-раскладка в nvim (fcitx5-remote)
-        inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+        opencode # coding agent (nixpkgs 1.18.31; dan-online/opencode-nix мёртв с мая 2026 и вечный 1.14.33)
         git
         nautilus
         adw-gtk3 # GTK тема (тёмная, синхронизирована с noctalia)
