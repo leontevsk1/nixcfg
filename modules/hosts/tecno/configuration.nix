@@ -271,6 +271,7 @@
         ddcutil
         zed-editor
         libreoffice
+        uv
       ];
 
       programs.neovim.enable = true;
@@ -382,6 +383,22 @@
             "Hotkey/NextPage" = { };
           };
         };
+      };
+
+      # Tell uv to install user-level binaries onto $PATH.
+      environment.localBinInPath = true;
+
+      # Let unpatched binaries (uv-managed Python, pip wheels with C deps)
+      # find a dynamic linker and the shared libraries they expect.
+      programs.nix-ld = {
+        enable = true;
+        libraries = with pkgs; [
+          stdenv.cc.cc.lib # libstdc++.so.6 for most wheels
+          zlib # CPython, many compiled extensions
+          openssl
+          libffi
+          glibc
+        ];
       };
 
       # Some programs need SUID wrappers, can be configured further or are
