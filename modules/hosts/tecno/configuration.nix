@@ -276,6 +276,7 @@
         zed-editor
         libreoffice
         uv
+        dnsutils
       ];
 
       programs.neovim.enable = true;
