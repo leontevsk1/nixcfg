@@ -277,6 +277,7 @@
         libreoffice
         uv
         dnsutils
+        nmap
       ];
 
       programs.neovim.enable = true;
