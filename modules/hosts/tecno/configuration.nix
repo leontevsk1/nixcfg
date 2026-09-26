@@ -84,20 +84,33 @@
       # Монтирование дисков через Nautilus (sda1 и т.д.)
       services.udisks2.enable = true;
 
-      services.greetd = {
+      # services.greetd = {
+      #   enable = true;
+      #   settings = {
+      #     default_session = {
+      #       user = "greeter";
+      #       command =
+      #         let
+      #           # Путь к директориям сессий (Wayland/X11), чтобы tuigreet видел ваши DE/WM
+      #           sessionsDir = "${config.services.displayManager.sessionData.desktops}/share";
+      #         in
+      #         "${lib.getExe pkgs.tuigreet} --time --asterisks --remember --remember-user-session --user-menu --sessions ${sessionsDir}/wayland-sessions --xsessions ${sessionsDir}/xsessions";
+      #     };
+      #   };
+      # };
+      # Enable noctalia-greeter
+      services.displayManager.noctalia-greeter = {
         enable = true;
         settings = {
-          default_session = {
-            user = "greeter";
-            command =
-              let
-                # Путь к директориям сессий (Wayland/X11), чтобы tuigreet видел ваши DE/WM
-                sessionsDir = "${config.services.displayManager.sessionData.desktops}/share";
-              in
-              "${lib.getExe pkgs.tuigreet} --time --asterisks --remember --remember-user-session --user-menu --sessions ${sessionsDir}/wayland-sessions --xsessions ${sessionsDir}/xsessions";
-          };
+          cursor.size = 24;
+          keyboard.layout = "us";
+        };
+        cursorTheme = {
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
         };
       };
+
       # Enable sound with pipewire.
       services.pulseaudio.enable = false;
       security.rtkit.enable = true;
