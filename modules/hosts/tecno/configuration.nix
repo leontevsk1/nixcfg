@@ -106,8 +106,8 @@
           keyboard.layout = "us";
         };
         cursorTheme = {
-          package = pkgs.breeze-cursors;
-          name = "Breeze";
+          package = pkgs.kdePackages.breeze;
+          name = "breeze_cursors";
         };
       };
 
@@ -236,7 +236,7 @@
           ]
         ))
         yazi # файловый менеджер (TOML-конфиг из ~/.config/yazi, flavors в дотфайлах)
-        breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
+        # breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
         kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
         libsForQt5.qt5ct # Qt5-приложения: тема через QT_QPA_PLATFORMTHEME
         kdePackages.qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
