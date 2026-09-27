@@ -102,12 +102,12 @@
       services.displayManager.noctalia-greeter = {
         enable = true;
         settings = {
-          cursor.size = 24;
+          cursor.size = 16;
           keyboard.layout = "us";
         };
         cursorTheme = {
-          package = pkgs.bibata-cursors;
-          name = "Bibata-Modern-Ice";
+          package = pkgs.breeze-cursors;
+          name = "Breeze";
         };
       };
 
