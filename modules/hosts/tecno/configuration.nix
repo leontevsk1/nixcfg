@@ -293,6 +293,7 @@
         nmap
         gh
         code2prompt
+        mpv
       ];
 
       programs.neovim.enable = true;
