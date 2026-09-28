@@ -291,6 +291,7 @@
         uv
         dnsutils
         nmap
+        gh
       ];
 
       programs.neovim.enable = true;
