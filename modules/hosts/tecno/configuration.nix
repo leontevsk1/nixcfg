@@ -292,6 +292,7 @@
         dnsutils
         nmap
         gh
+        code2prompt
       ];
 
       programs.neovim.enable = true;
