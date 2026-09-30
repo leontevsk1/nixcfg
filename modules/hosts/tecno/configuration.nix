@@ -257,6 +257,7 @@
         nixd # LSP-сервер для Nix: Serena MCP требует именно nixd (nil остаётся за nvim)
         lua-language-server # LSP Lua: Serena (fallback к авто-качаемому)
         gopls # LSP Go: Serena требует установленный gopls
+        rustup # Rust: после ребилда один раз `rustup default stable` (gcc выше — линкер)
         gh # GitHub CLI: для агентов (GitHub-MCP отвергнут в пользу CLI — у моделей лучше данные на gh)
         brightnessctl # биндинги XF86MonBrightness в niri ссылаются на него
         wev # Wayland event viewer: отладка Fn-клавиш
