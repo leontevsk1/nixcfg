@@ -8,7 +8,10 @@
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
     ai-usagebar.url = "github:akitaonrails/ai-usagebar";
+    # Один nixpkgs на весь флейк — без этого в lock живёт второй nixpkgs
+    # (upstream-пин ветки nixpkgs-26.05-darwin)
+    ai-usagebar.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

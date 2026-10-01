@@ -10,28 +10,11 @@
     {
       imports = [
         # Include the results of the hardware scan.
+        self.nixosModules.commonConfiguration
         self.nixosModules.tecnoHardware
         self.nixosModules.niri
         self.nixosModules.noctalia
       ];
-      # Use the systemd-boot EFI boot loader.
-      boot.loader.systemd-boot.enable = true;
-      boot.loader.efi.canTouchEfiVariables = true;
-      # Максимум 5 последних поколений в меню загрузки
-      boot.loader.systemd-boot.configurationLimit = 5;
-
-      # Сборка мусора: ежедневно удалять все, кроме 5 последних поколений
-      nix.gc = {
-        automatic = true;
-        dates = "daily";
-        options = "--delete-generations +5";
-      };
-      nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      # Use latest Zen kernel.
-      boot.kernelPackages = pkgs.linuxPackages_zen;
 
       networking.hostName = "tecno"; # Define your hostname.
       # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -40,38 +23,15 @@
       # networking.proxy.default = "http://user:password@proxy:port/";
       # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-      # Enable networking
-      networking.networkmanager.enable = true;
-
-      networking.enableIPv6 = false;
-      boot.kernelParams = [ "ipv6.disable=1" ];
       # Set your time zone.
       time.timeZone = "Asia/Krasnoyarsk";
-
-      # Select internationalisation properties.
-      i18n.defaultLocale = "en_US.UTF-8";
-
-      i18n.extraLocaleSettings = {
-        LC_ADDRESS = "ru_RU.UTF-8";
-        LC_IDENTIFICATION = "ru_RU.UTF-8";
-        LC_MEASUREMENT = "ru_RU.UTF-8";
-        LC_MONETARY = "ru_RU.UTF-8";
-        LC_NAME = "ru_RU.UTF-8";
-        LC_NUMERIC = "ru_RU.UTF-8";
-        LC_PAPER = "ru_RU.UTF-8";
-        LC_TELEPHONE = "ru_RU.UTF-8";
-        LC_TIME = "ru_RU.UTF-8";
-      };
 
       # Enable i2c bus
       hardware.i2c.enable = true;
       boot.kernelModules = [ "i2c-dev" ];
 
-      # Add user to i2c group
-      users.groups.i2c.members = [ "yourusername" ];
-
-      # Enable CUPS to print documents.
-      services.printing.enable = true;
+      # Группа i2c — для ddcutil (доступ к /dev/i2c-* только членам группы)
+      users.users.leont.extraGroups = [ "i2c" ];
 
       # Сенсоры для Noctalia: батарея, bluetooth, режимы питания
       services.upower.enable = true;
@@ -84,20 +44,6 @@
       # Монтирование дисков через Nautilus (sda1 и т.д.)
       services.udisks2.enable = true;
 
-      # services.greetd = {
-      #   enable = true;
-      #   settings = {
-      #     default_session = {
-      #       user = "greeter";
-      #       command =
-      #         let
-      #           # Путь к директориям сессий (Wayland/X11), чтобы tuigreet видел ваши DE/WM
-      #           sessionsDir = "${config.services.displayManager.sessionData.desktops}/share";
-      #         in
-      #         "${lib.getExe pkgs.tuigreet} --time --asterisks --remember --remember-user-session --user-menu --sessions ${sessionsDir}/wayland-sessions --xsessions ${sessionsDir}/xsessions";
-      #     };
-      #   };
-      # };
       # Enable noctalia-greeter
       services.displayManager.noctalia-greeter = {
         enable = true;
@@ -111,39 +57,6 @@
         };
       };
 
-      # Enable sound with pipewire.
-      services.pulseaudio.enable = false;
-      security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        # If you want to use JACK applications, uncomment this
-        # jack.enable = true;
-      };
-
-      # Define a user account. Don't forget to set a password with ‘passwd’.
-      users.users."leont" = {
-        isNormalUser = true;
-        description = "leont";
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-        ];
-        shell = pkgs.zsh;
-        packages = with pkgs; [
-          #  thunderbird
-        ];
-      };
-
-      programs.zsh.enable = true;
-      programs.zsh.shellInit = ''
-        # radleylewis/zsh expects its config in XDG_CONFIG_HOME/zsh
-        export ZDOTDIR="$HOME/.config/zsh"
-      '';
-
-      # Install firefox.
       # Firefox: декларативная приватность (Enterprise Policies, applied at each start).
       # Философия: без урезания функционала — cookies НЕ чистятся, звонки/загрузки работают.
       # Ключи с точками — ОБЯЗАТЕЛЬНО в кавычках (иначе Nix строит вложенные attrsets).
@@ -225,7 +138,6 @@
       # yazi: БЕЗ programs.yazi модуля — он всегда экспортирует YAZI_CONFIG_HOME
       # в /nix/store, из-за чего ~/.config/yazi (дотфайлы hyprdev) игнорируется.
       # Чистый пакет читает ~/.config/yazi как обычно.
-      nixpkgs.config.allowUnfree = true;
 
       # List packages installed in system profile.
       # You can use https://search.nixos.org/ to find more packages (and options).
@@ -238,7 +150,6 @@
         yazi # файловый менеджер (TOML-конфиг из ~/.config/yazi, flavors в дотфайлах)
         # breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
         kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
-        libsForQt5.qt5ct # Qt5-приложения: тема через QT_QPA_PLATFORMTHEME
         kdePackages.qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
         yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
         glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
@@ -261,7 +172,6 @@
         gh # GitHub CLI: для агентов (GitHub-MCP отвергнут в пользу CLI — у моделей лучше данные на gh)
         brightnessctl # биндинги XF86MonBrightness в niri ссылаются на него
         wev # Wayland event viewer: отладка Fn-клавиш
-        neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
         wget
         kitty
         eza
@@ -292,7 +202,6 @@
         uv
         dnsutils
         nmap
-        gh
         code2prompt
         mpv
       ];
@@ -434,9 +343,6 @@
 
       # List services that you want to enable:
 
-      # Enable the OpenSSH daemon.
-      services.openssh.enable = true;
-
       # Open ports in the firewall.
       # networking.firewall.allowedTCPPorts = [ ... ];
       # networking.firewall.allowedUDPPorts = [ ... ];
@@ -448,24 +354,8 @@
       # accidentally delete configuration.nix.
       # system.copySystemConfiguration = true;
 
-      # This option defines the first version of NixOS you have installed on this particular machine,
-      # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-      #
-      # Most users should NEVER change this value after the initial install, for any reason,
-      # even if you've upgraded your system to a new NixOS release.
-      #
-      # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-      # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-      # to actually do that.
-      #
-      # This value being lower than the current NixOS release does NOT mean your system is
-      # out of date, out of support, or vulnerable.
-      #
-      # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-      # and migrated your data accordingly.
-      #
-      # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-      system.stateVersion = "26.05"; # Did you read the comment?
+      # НЕ менять после установки — см. https://nixos.org/manual/nixos/stable/#sec-upgrading
+      system.stateVersion = "26.05";
 
     };
 }

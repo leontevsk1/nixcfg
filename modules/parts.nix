@@ -1,10 +1,6 @@
 {
   config = {
-    systems = [
-      "x86_64-linux"
-      "x86_64-darwin"
-      "aarch64-linux"
-      "aarch64-darwin"
-    ];
+    # Все хосты — x86_64-linux; лишние системы только замедляют eval
+    systems = [ "x86_64-linux" ];
   };
 }
