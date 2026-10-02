@@ -157,7 +157,7 @@
         polkit_gnome # polkit-агент: диалоги авторизации (монтирование, systemd), стартует из niri
         gsettings-desktop-schemas # схемы org.gnome.*: без них gsettings падает с "No schemas installed"
         telegram-desktop # мессенджер (Qt6)
-        rustdesk # remote desktop (входящие порты открыты в firewall ниже)
+        rustdesk # remote desktop-клиент (подключение к чужим машинам)
         bleachbit # очистка системы
         transmission_4-gtk # торрент-клиент (заодно — чистый Qt6-тест тем)
         psmisc # killall/pstree — раньше killall отсутствовал и ломал диагностику процессов
@@ -344,10 +344,7 @@
 
       # List services that you want to enable:
 
-      # RustDesk: входящие подключения (TeamViewer-style). TCP: файловый
-      # канал/релей, UDP 21116 — NAT-обход (ID/heartbeat). 21118-21119 — веб-клиент.
-      networking.firewall.allowedTCPPorts = [ 21115 21116 21117 21118 21119 ];
-      networking.firewall.allowedUDPPorts = [ 21116 ];
+      
       # Or disable the firewall altogether.
       # networking.firewall.enable = false;
 
