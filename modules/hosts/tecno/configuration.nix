@@ -113,6 +113,21 @@
           "browser.safebrowsing.provider.google4.dataSharingURL" = "";
           "browser.safebrowsing.provider.google.dataSharing.enabled" = false;
 
+          # --- Прокси детерминированно через Throne, DNS через прокси ---
+          "network.proxy.type" = 1;
+          "network.proxy.share_proxy_settings" = true;
+          "network.proxy.http" = "127.0.0.1";
+          "network.proxy.http_port" = 2080;
+          "network.proxy.socks" = "127.0.0.1";
+          "network.proxy.socks_port" = 2080;
+          "network.proxy.socks_version" = 5;
+          "network.proxy.socks_remote_dns" = true;
+          "network.proxy.no_proxies_on" = "localhost, 127.0.0.1";
+
+          # --- DoH в браузере выключен явно (резолв — через Throne/VPS) ---
+          "network.trr.mode" = 0;
+          "network.trr.uri" = "";
+
           # --- HTTPS-Only ---
           "dom.security.https_only_mode" = true;
           "dom.security.https_only_mode_send_http_background_request" = false;
@@ -140,7 +155,12 @@
           "browser.contentblocking.category" = "strict";
         };
       };
-      programs.throne.enable = true;
+      programs.throne = {
+        enable = true;
+        tunMode.enable = true;
+        # Optional: enable setuid if the default capabilities method fails
+        # tunMode.setuid = true;
+      };
       # yazi: БЕЗ programs.yazi модуля — он всегда экспортирует YAZI_CONFIG_HOME
       # в /nix/store, из-за чего ~/.config/yazi (дотфайлы hyprdev) игнорируется.
       # Чистый пакет читает ~/.config/yazi как обычно.
