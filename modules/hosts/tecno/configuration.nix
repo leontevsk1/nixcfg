@@ -61,7 +61,7 @@
         };
       };
 
-      programs.adb.enable = true;
+      # programs.adb.enable = true; - no needed more in nixOs
 
       # Firefox: декларативная приватность (Enterprise Policies, applied at each start).
       # Философия: без урезания функционала — cookies НЕ чистятся, звонки/загрузки работают.
@@ -212,6 +212,7 @@
         code2prompt
         mpv
         universal-android-debloater
+        android-tools
       ];
 
       programs.neovim.enable = true;
