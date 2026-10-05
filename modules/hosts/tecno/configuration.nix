@@ -31,7 +31,11 @@
       boot.kernelModules = [ "i2c-dev" ];
 
       # Группа i2c — для ddcutil (доступ к /dev/i2c-* только членам группы)
-      users.users.leont.extraGroups = [ "i2c" ];
+      users.users.leont.extraGroups = [
+        "i2c"
+        "wheel"
+        "adbuser"
+      ];
 
       # Сенсоры для Noctalia: батарея, bluetooth, режимы питания
       services.upower.enable = true;
@@ -56,6 +60,8 @@
           name = "breeze_cursors";
         };
       };
+
+      programs.adb.enable = true;
 
       # Firefox: декларативная приватность (Enterprise Policies, applied at each start).
       # Философия: без урезания функционала — cookies НЕ чистятся, звонки/загрузки работают.
@@ -205,6 +211,7 @@
         nmap
         code2prompt
         mpv
+        universal-android-debloater
       ];
 
       programs.neovim.enable = true;
@@ -344,7 +351,6 @@
 
       # List services that you want to enable:
 
-      
       # Or disable the firewall altogether.
       # networking.firewall.enable = false;
 
