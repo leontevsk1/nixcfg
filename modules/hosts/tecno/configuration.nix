@@ -230,7 +230,11 @@
         dnsutils
         nmap
         code2prompt
-        mpv
+        (mpv.override { scripts = [ mpvScripts.mpris ]; }) # playback + MPRIS (mpv-mpris)
+        yt-dlp # stream resolution, audio downloads, view/like counts
+        jq # JSON parsing in YouTube API requests
+        curl # YouTube API and thumbnail requests
+        netcat-openbsd # nc -U unix-socket IPC with mpv (traditional/busybox nc won't work)
         universal-android-debloater
         android-tools
       ];
