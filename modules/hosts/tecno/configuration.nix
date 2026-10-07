@@ -60,7 +60,10 @@
           name = "breeze_cursors";
         };
       };
-
+      programs.java = {
+        enable = true;
+        package = pkgs.jdk; # Defaults to the latest LTS version of OpenJDK
+      };
       # programs.adb.enable = true; - no needed more in nixOs
 
       # Firefox: декларативная приватность (Enterprise Policies, applied at each start).
