@@ -240,6 +240,7 @@
         netcat-openbsd # nc -U unix-socket IPC with mpv (traditional/busybox nc won't work)
         universal-android-debloater
         android-tools
+        go
       ];
 
       programs.neovim.enable = true;
