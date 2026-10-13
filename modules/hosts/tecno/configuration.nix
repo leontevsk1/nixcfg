@@ -241,6 +241,7 @@
         universal-android-debloater
         android-tools
         go
+        thunar
       ];
 
       programs.neovim.enable = true;
