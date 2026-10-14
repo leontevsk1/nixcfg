@@ -14,6 +14,7 @@
         self.nixosModules.tecnoHardware
         self.nixosModules.niri
         self.nixosModules.hyprland
+        self.nixosModules.thunar
         self.nixosModules.noctalia
       ];
 
@@ -46,7 +47,7 @@
         powerOnBoot = true;
       };
 
-      # Монтирование дисков через Nautilus (sda1 и т.д.)
+      # Монтирование дисков через Thunar/gvfs (sda1 и т.д.)
       services.udisks2.enable = true;
 
       # Enable noctalia-greeter
@@ -183,7 +184,6 @@
         kdePackages.qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
         yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
         glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
-        gvfs # монтирование дисков/сетки в Nautilus (бэкенд udisks2)
         polkit_gnome # polkit-агент: диалоги авторизации (монтирование, systemd), стартует из niri
         gsettings-desktop-schemas # схемы org.gnome.*: без них gsettings падает с "No schemas installed"
         telegram-desktop # мессенджер (Qt6)
@@ -218,7 +218,6 @@
         fcitx5 # im-switch.nvim: авто-раскладка в nvim (fcitx5-remote)
         opencode # coding agent (nixpkgs 1.18.31; dan-online/opencode-nix мёртв с мая 2026 и вечный 1.14.33)
         git
-        nautilus
         adw-gtk3 # GTK тема (тёмная, синхронизирована с noctalia)
         papirus-icon-theme # иконки (Papirus-Dark)
         fastfetch
@@ -242,7 +241,6 @@
         universal-android-debloater
         android-tools
         go
-        thunar
       ];
 
       programs.neovim.enable = true;
