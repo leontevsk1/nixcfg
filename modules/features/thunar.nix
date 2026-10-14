@@ -5,11 +5,12 @@
     # hyprdev/config/xfce4/helpers.rc, каналы xfconf — hyprdev/config/xfce4/xfconf.
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = (with pkgs.xfce; [
         thunar-archive-plugin # контекстное меню архивов (бэкенд — file-roller)
         thunar-volman # автомонтирование съёмных носителей
+      ]) ++ (with pkgs; [
         thunar-media-tags-plugin # массовое переименование + аудиотеги
-      ];
+      ]);
     };
 
     programs.xfconf.enable = true; # без xfconfd настройки Thunar не сохраняются
