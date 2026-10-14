@@ -13,6 +13,7 @@
         self.nixosModules.commonConfiguration
         self.nixosModules.tecnoHardware
         self.nixosModules.niri
+        self.nixosModules.hyprland
         self.nixosModules.noctalia
       ];
 
