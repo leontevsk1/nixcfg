@@ -204,6 +204,7 @@
         brightnessctl # биндинги XF86MonBrightness в niri ссылаются на него
         wev # Wayland event viewer: отладка Fn-клавиш
         wget
+        micromamba # окружения Python для лабораторных (conda-forge; дин. бинарники работают через nix-ld)
         kitty
         eza
         tree-sitter # nvim-treesitter (branch main): компиляция парсеров
