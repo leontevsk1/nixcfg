@@ -240,6 +240,7 @@
         android-tools
         go
         pandoc
+        obsidian
       ];
 
       programs.neovim.enable = true;
