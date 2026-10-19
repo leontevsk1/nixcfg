@@ -239,6 +239,7 @@
         universal-android-debloater
         android-tools
         go
+        pandoc
       ];
 
       programs.neovim.enable = true;
