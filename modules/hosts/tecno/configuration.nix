@@ -241,6 +241,8 @@
         go
         pandoc
         obsidian
+        nwg-look
+        nwg-displays
       ];
 
       programs.neovim.enable = true;
