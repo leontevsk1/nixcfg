@@ -50,6 +50,17 @@
       # Монтирование дисков через Thunar/gvfs (sda1 и т.д.)
       services.udisks2.enable = true;
 
+      # Дискового swap нет (см. hardware-configuration) — zram вместо него.
+      # Без любого swap нехватка RAM валит систему в thrashing: 25.10.2026 ребилд
+      # (hyprland+rustdesk параллельно) завис на 8 часов, ноут ушёл в перегрев.
+      # 50% от 15.5G = ~8G сжатого zram — буфер, при котором oomd/ядро успевают
+      # убить виновника вместо смерти всей машины.
+      zramSwap = {
+        enable = true;
+        algorithm = "zstd";
+        memoryPercent = 50;
+      };
+
       # Enable noctalia-greeter
       services.displayManager.noctalia-greeter = {
         enable = true;
@@ -187,7 +198,9 @@
         polkit_gnome # polkit-агент: диалоги авторизации (монтирование, systemd), стартует из niri
         gsettings-desktop-schemas # схемы org.gnome.*: без них gsettings падает с "No schemas installed"
         telegram-desktop # мессенджер (Qt6)
-        rustdesk # remote desktop-клиент (подключение к чужим машинам)
+        # rustdesk удалён: при каждом обновлении норовил собираться из исходников
+        # (Rust-сборка съедает всю RAM) и перегревал ноут. Нужен разово —
+        # `nix run nixpkgs#rustdesk` при рабочей сети ставится из кэша.
         bleachbit # очистка системы
         transmission_4-gtk # торрент-клиент (заодно — чистый Qt6-тест тем)
         psmisc # killall/pstree — раньше killall отсутствовал и ломал диагностику процессов
