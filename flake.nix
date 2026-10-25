@@ -1,5 +1,12 @@
 {
   inputs = {
+    # nixpkgs пинован во flake.lock и НЕ обновляется автоматически: hyprland
+    # обновляется только вместе с nixpkgs, а свежие версии могут отсутствовать
+    # в кэше (lag hydra) — тогда nix молча собирает их из исходников, и на
+    # 15.5ГБ ноутбуке без swap это кончилось 8-часовым зависанием (25.10.2026).
+    # Обновлять осознанно: nix flake update nixpkgs, затем ПЕРЕД rebuild
+    # проверять dry-run'ом, что тяжёлое появилось в кэше:
+    #   nix build .#nixosConfigurations.tecno.config.system.build.toplevel --dry-run
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
