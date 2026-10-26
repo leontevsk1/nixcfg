@@ -23,12 +23,23 @@
       # Use latest Zen kernel.
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
+      boot.plymouth = {
+        enable = true;
+        theme = "bgrt";
+      };
+
       # Enable networking
       networking.networkmanager.enable = true;
 
       # IPv6 отключён на обеих машинах (политика)
       networking.enableIPv6 = false;
-      boot.kernelParams = [ "ipv6.disable=1" ];
+      boot.consoleLogLevel = 3;
+      boot.kernelParams = [
+        "ipv6.disable=1"
+        "quiet"
+        "rd.udev.log_level=3"
+        "rd.systemd.show_status=auto"
+      ];
 
       # Select internationalisation properties.
       i18n.defaultLocale = "en_US.UTF-8";
