@@ -26,7 +26,8 @@
 
       boot.plymouth = {
         enable = true;
-        theme = "bgrt";
+        theme = "spinfinity";
+        logo = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake-white.png";
       };
 
       # Enable networking
