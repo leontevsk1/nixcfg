@@ -8,6 +8,7 @@
       boot.loader.efi.canTouchEfiVariables = true;
       # Максимум 5 последних поколений в меню загрузки
       boot.loader.systemd-boot.configurationLimit = 5;
+      boot.loader.timeout = 0;
 
       # Сборка мусора: ежедневно удалять всё, кроме 5 последних поколений
       nix.gc = {
