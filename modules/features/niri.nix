@@ -13,6 +13,12 @@
     };
 
     # Xwayland для X11-приложений (Steam и т.п.), поднимается по env DISPLAY=:0
-    environment.systemPackages = [ pkgs.xwayland-satellite ];
+    # + общие Wayland-инструменты (перенесены из hyprland-модуля):
+    # grim — скриншоты (Noctalia/фолбэк), cliphist — история буфера обмена
+    environment.systemPackages = with pkgs; [
+      xwayland-satellite
+      grim
+      cliphist
+    ];
   };
 }

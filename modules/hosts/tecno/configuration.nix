@@ -13,7 +13,6 @@
         self.nixosModules.commonConfiguration
         self.nixosModules.tecnoHardware
         self.nixosModules.niri
-        self.nixosModules.hyprland
         self.nixosModules.thunar
         self.nixosModules.noctalia
       ];
@@ -31,6 +30,7 @@
       # Enable i2c bus
       hardware.i2c.enable = true;
       boot.kernelModules = [ "i2c-dev" ];
+      hardware.amdgpu.initrd.enable = true;
 
       # Группа i2c — для ddcutil (доступ к /dev/i2c-* только членам группы)
       users.users.leont.extraGroups = [

@@ -2,6 +2,18 @@
   flake.nixosModules.commonConfiguration =
     { pkgs, ... }:
 
+    let
+      plymouthLogo = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake-white.png";
+
+      plymouthTheme = pkgs.runCommand "plymouth-nixos-progress" { } ''
+        mkdir -p $out/share/plymouth/themes/nixos-progress
+        cp ${pkgs.plymouth}/share/plymouth/themes/script/progress_box.png $out/share/plymouth/themes/nixos-progress/
+        cp ${pkgs.plymouth}/share/plymouth/themes/script/progress_bar.png $out/share/plymouth/themes/nixos-progress/
+        cp ${./plymouth/nixos-progress.script} $out/share/plymouth/themes/nixos-progress/nixos-progress.script
+        substitute ${./plymouth/nixos-progress.plymouth} $out/share/plymouth/themes/nixos-progress/nixos-progress.plymouth \
+          --replace-fail '@themeDir@' "$out/share/plymouth/themes/nixos-progress"
+      '';
+    in
     {
       # systemd-boot: общая база (специфичные опции хоста дописываются поверх)
       boot.loader.systemd-boot.enable = true;
@@ -26,8 +38,9 @@
 
       boot.plymouth = {
         enable = true;
-        theme = "spinfinity";
-        logo = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake-white.png";
+        theme = "nixos-progress";
+        logo = plymouthLogo;
+        themePackages = [ plymouthTheme ];
       };
 
       # Enable networking
