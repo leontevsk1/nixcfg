@@ -61,6 +61,10 @@
         memoryPercent = 50;
       };
 
+      boot.kernel.sysctl = {
+        "vm.swappiness" = 150;
+      };
+
       # Enable noctalia-greeter
       services.displayManager.noctalia-greeter = {
         enable = true;
