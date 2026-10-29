@@ -386,6 +386,9 @@
           openssl
           libffi
           glibc
+          wayland # OpenTUI Wayland clipboard backend
+          libpulseaudio # OpenTUI audio support
+          alsa-lib # OpenTUI audio support
         ];
       };
 
