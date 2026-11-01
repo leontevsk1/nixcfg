@@ -260,6 +260,8 @@
         obsidian
         nwg-look
         nwg-displays
+        plantuml # UML-компилятор (jar + обёртка `plantuml`, использует programs.java)
+        graphviz # dot: нужен PlantUML для части диаграмм (class/component и др.)
       ];
 
       programs.neovim.enable = true;
