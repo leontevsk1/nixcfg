@@ -262,6 +262,7 @@
         nwg-displays
         plantuml # UML-компилятор (jar + обёртка `plantuml`, использует programs.java)
         graphviz # dot: нужен PlantUML для части диаграмм (class/component и др.)
+        imagemagick # `magick`: image.nvim (процессор magick_cli) для инлайн-диаграмм в kitty
       ];
 
       programs.neovim.enable = true;
