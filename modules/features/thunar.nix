@@ -13,6 +13,7 @@
     };
 
     programs.xfconf.enable = true; # без xfconfd настройки Thunar не сохраняются
+    xdg.mime.defaultApplications."inode/directory" = "thunar.desktop";
     services.gvfs.enable = true; # trash://, MTP, сеть, монтирование через udisks2
     services.tumbler.enable = true; # thumbnails (картинки из коробки, видео — ffmpegthumbnailer)
 

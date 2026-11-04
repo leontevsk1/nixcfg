@@ -25,6 +25,19 @@
 - Поколения: configurationLimit = 5 + gc daily `--delete-generations +5`.
 - Полные грабли — скилл `nixos-rebuild-guard` и `INSIGHTS.md` в репо дотфайлов hyprdev.
 
+## Файловый менеджер и диалоги файлов (tecno)
+
+- Папки открываются в Thunar (`inode/directory`). `programs.niri.useNautilus = false`
+  отключает D-Bus-интеграцию Nautilus и переключает FileChooser на GTK-портал;
+  GNOME-портал остаётся для демонстрации экрана.
+- Для Qt-приложений, включая Telegram, в `~/.config/qt6ct/qt6ct.conf` нужно
+  `standard_dialogs=xdgdesktopportal` в секции `[Appearance]`. Это пользовательский
+  файл, не управляемый NixOS: настройка сохраняет тему qt6ct/Noctalia, но отдаёт
+  выбор файлов порталу. После изменения полностью перезапустить Telegram.
+- После применения NixOS-конфига выйти из сессии и войти снова, чтобы старый
+  процесс Nautilus освободил `org.freedesktop.FileManager1` и порталы перечитали
+  настройки. Thunar не предоставляет диалоги «Открыть/Сохранить»: их рисует GTK.
+
 ## Связанные репозитории
 
 - **hyprdev** (`~/hyprdev`) — дотфайлы (user-уровень, симлинки в ~/.config). WM-агностичная часть (nvim, zsh, yazi, starship, fastfetch, eza, kitty, opencode) общая для обоих хостов; niri/noctalia — только tecno. Репо-база знаний — `INSIGHTS.md`.
