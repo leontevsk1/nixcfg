@@ -19,6 +19,7 @@
 
     environment.systemPackages = with pkgs; [
       file-roller # бэкенд thunar-archive-plugin
+      wsdd # GVFS запускает по PATH для wsdd:// (обнаружение SMB, без системного сервера)
       ffmpegthumbnailer # video-thumbnails для tumbler
       papirus-folders # перекраска папок Papirus (уже применено: grey, локальная копия в ~/.local/share/icons)
     ];

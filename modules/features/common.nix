@@ -47,10 +47,11 @@
       networking.networkmanager.enable = true;
 
       # IPv6 отключён на обеих машинах (политика)
+      # Отключаем через sysctl NixOS, сохраняя подсистему IPv6 в ядре:
+      # ipv6.disable=1 удаляет /proc/sys/net/ipv6 и ломает записи sysctl/udev.
       networking.enableIPv6 = false;
       boot.consoleLogLevel = 3;
       boot.kernelParams = [
-        "ipv6.disable=1"
         "quiet"
         "rd.udev.log_level=3"
         "rd.systemd.show_status=auto"

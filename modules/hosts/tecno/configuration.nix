@@ -91,8 +91,8 @@
         preferencesStatus = "user";
         preferences = {
           # --- Телеметрия и отправка данных ---
-          "toolkits.telemetry.unified" = false;
-          "toolkits.telemetry.enabled" = false;
+          "toolkit.telemetry.unified" = false;
+          "toolkit.telemetry.enabled" = false;
           "datareporting.policy.dataSubmissionEnabled" = false;
           "datareporting.healthreport.uploadEnabled" = false;
           "browser.ping-centre.telemetry" = false;
@@ -293,7 +293,6 @@
         gtk-font-name=Inter 11
         gtk-cursor-theme-name=breeze_cursors
         gtk-cursor-theme-size=16
-        gtk-application-prefer-dark-theme=1
       '';
       programs.dconf.enable = true;
       environment.variables.GTK_THEME = "adw-gtk3-dark";
@@ -306,7 +305,8 @@
       environment.variables.XCURSOR_THEME = "breeze_cursors";
       environment.variables.XCURSOR_SIZE = "16";
       # pathsToLink ограничивает, какие поддиректории share/lib попадают в профиль:
-      # без /share/themes adw-gtk3 недоступен (битые симлинки в ~/.config/gtk-4.0),
+      # /share/themes публикует adw-gtk3 в /run/current-system/sw/share/themes;
+      # ссылки ~/.config/gtk-4.0 должны вести туда, а не в /usr/share/themes.
       # без /lib/qt-6/plugins не загружается libqt6ct (темы Qt), без /share/glib-2.0
       # не видно gsettings-схем
       environment.pathsToLink = [
