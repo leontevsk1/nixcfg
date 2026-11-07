@@ -33,8 +33,28 @@
         miserableThemes
         tokyonight-gtk-theme
         tela-circle-icon-theme
-        overpass
         picom-pijulius
+        rofi
+        bibata-cursors
+        # терминальный стек как на tecno (без dev-инструментов)
+        zsh
+        eza
+        bat
+        fzf
+        fd
+        ripgrep
+        zoxide
+        starship
+        fastfetch
+        yazi
+        # утилиты для горячих клавиш (аналоги niri-биндов)
+        xdotool
+        wmctrl
+        xclip
+        xcolor # пипетка (Mod+Shift+Alt+C в niri)
+        tesseract # OCR области экрана (Mod+Shift+T в niri)
+        playerctl
+        brightnessctl
         xfce4-docklike-plugin
         xfce4-pulseaudio-plugin
         xfce4-notifyd
@@ -46,6 +66,36 @@
       # обои доступны как /run/current-system/sw/share/backgrounds/miserable/*.png
       environment.pathsToLink = [ "/share/backgrounds" ];
 
-      fonts.packages = [ pkgs.overpass ];
+      # Шрифты: Inter для интерфейса, JetBrainsMono Nerd Font для терминала,
+      # полный набор для веба (Firefox/Chromium): serif, CJK, emoji, MS-метрики
+      fonts.packages = with pkgs; [
+        inter
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.symbols-only
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-color-emoji
+        liberation_ttf
+        corefonts
+        font-awesome
+      ];
+      fonts.fontconfig = {
+        enable = true;
+        antialias = true;
+        hinting = {
+          enable = true;
+          style = "slight";
+        };
+        subpixel.lcdfilter = "default";
+        defaultFonts = {
+          sansSerif = [ "Inter" "Noto Sans CJK SC" ];
+          serif = [ "Noto Serif" "Noto Serif CJK SC" ];
+          monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK SC" ];
+          emoji = [ "Noto Color Emoji" ];
+        };
+      };
+
+      # alacritty вместо xfce4-terminal
+      environment.xfce.excludePackages = [ pkgs.xfce4-terminal ];
     };
 }

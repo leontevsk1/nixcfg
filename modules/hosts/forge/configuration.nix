@@ -71,7 +71,10 @@
       # services.libinput.enable = true;
 
       programs.firefox.enable = true;
-      programs.throne.enable = true;
+      programs.throne = {
+        enable = true;
+        tunMode.enable = true;
+      };
 
       # List packages installed in system profile.
       # You can use https://search.nixos.org/ to find more packages (and options).
