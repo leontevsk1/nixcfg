@@ -13,6 +13,7 @@
         # Include the results of the hardware scan.
         self.nixosModules.commonConfiguration
         self.nixosModules.forgeHardware
+        self.nixosModules.xfceRice
       ];
       # UEFI Shell — нужен для поиска device handle Windows ESP
       # (boot.loader.systemd-boot.windows.*.efiDeviceHandle)
