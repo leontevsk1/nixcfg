@@ -15,6 +15,7 @@
         self.nixosModules.niri
         self.nixosModules.thunar
         self.nixosModules.noctalia
+        self.nixosModules.mdgreet
       ];
 
       networking.hostName = "tecno"; # Define your hostname.
@@ -65,18 +66,6 @@
         "vm.swappiness" = 150;
       };
 
-      # Enable noctalia-greeter
-      services.displayManager.noctalia-greeter = {
-        enable = true;
-        settings = {
-          cursor.size = 16;
-          keyboard.layout = "us";
-        };
-        cursorTheme = {
-          package = pkgs.kdePackages.breeze;
-          name = "breeze_cursors";
-        };
-      };
       programs.java = {
         enable = true;
         package = pkgs.jdk; # Defaults to the latest LTS version of OpenJDK
