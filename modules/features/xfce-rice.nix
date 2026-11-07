@@ -37,8 +37,8 @@
         xfce4-pulseaudio-plugin
         xfce4-notifyd
         scrot # скриншоты для проверки по ssh
-        xorg.xauth
-        xorg.xrdb
+        xauth
+        xrdb
       ];
 
       fonts.packages = [ pkgs.overpass ];
