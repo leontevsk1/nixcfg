@@ -264,6 +264,7 @@
         graphviz # dot: нужен PlantUML для части диаграмм (class/component и др.)
         imagemagick # `magick`: image.nvim (процессор magick_cli) для инлайн-диаграмм в kitty
         herdr
+        planner
       ];
 
       programs.neovim.enable = true;
