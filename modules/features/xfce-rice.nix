@@ -58,6 +58,7 @@
         xfce4-docklike-plugin
         xfce4-pulseaudio-plugin
         xfce4-notifyd
+        xfce4-xkb-plugin # индикатор раскладки в панели
         scrot # скриншоты для проверки по ssh
         xauth
         xrdb
@@ -88,9 +89,18 @@
         };
         subpixel.lcdfilter = "default";
         defaultFonts = {
-          sansSerif = [ "Inter" "Noto Sans CJK SC" ];
-          serif = [ "Noto Serif" "Noto Serif CJK SC" ];
-          monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK SC" ];
+          sansSerif = [
+            "Inter"
+            "Noto Sans CJK SC"
+          ];
+          serif = [
+            "Noto Serif"
+            "Noto Serif CJK SC"
+          ];
+          monospace = [
+            "JetBrainsMono Nerd Font"
+            "Noto Sans Mono CJK SC"
+          ];
           emoji = [ "Noto Color Emoji" ];
         };
       };

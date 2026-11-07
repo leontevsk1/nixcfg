@@ -63,8 +63,10 @@
 
       # Configure keymap in X11
       services.xserver.xkb = {
-        layout = "us";
+        layout = "us,ru";
         variant = "";
+        # Win+Space — как на tecno; Alt+Shift — запасной вариант
+        options = "grp:win_space_toggle,grp:alt_shift_toggle";
       };
 
       # Enable touchpad support (enabled default in most desktopManager).
