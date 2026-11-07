@@ -22,6 +22,8 @@
           mkdir -p $out/share/themes
           cp -r home/.themes/Lavanda-Dark-Compact-Tokyonight $out/share/themes/
           cp -r home/.themes/cirkles $out/share/themes/
+          mkdir -p $out/share/backgrounds/miserable
+          cp home/.local/share/backgrounds/* $out/share/backgrounds/miserable/
           runHook postInstall
         '';
       };
@@ -40,6 +42,9 @@
         xauth
         xrdb
       ];
+
+      # обои доступны как /run/current-system/sw/share/backgrounds/miserable/*.png
+      environment.pathsToLink = [ "/share/backgrounds" ];
 
       fonts.packages = [ pkgs.overpass ];
     };
