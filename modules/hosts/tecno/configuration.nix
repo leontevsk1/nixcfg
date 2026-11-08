@@ -15,7 +15,7 @@
         self.nixosModules.niri
         self.nixosModules.thunar
         self.nixosModules.noctalia
-        self.nixosModules.mdgreet
+        self.nixosModules.regreet
       ];
 
       networking.hostName = "tecno"; # Define your hostname.

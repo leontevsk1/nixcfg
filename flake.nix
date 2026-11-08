@@ -21,14 +21,6 @@
     # нет, поэтому обновлять только осознанно:
     #   nix flake update ai-usagebar
     ai-usagebar.url = "github:akitaonrails/ai-usagebar";
-
-    # mdgreet — greetd-грейтер (Rust+Slint, Material You). Как и ai-usagebar,
-    # живёт на СОБСТВЕННОМ nixpkgs автора: НЕ добавлять
-    # `inputs.nixpkgs.follows = "nixpkgs"` — хэш пакета изменится, пропадёт
-    # попадание в кэш автора (https://mois3y.cachix.org) и Rust начнёт
-    # собираться из исходников. Обновлять осознанно: nix flake update mdgreet,
-    # затем проверять dry-run'ом, что пакет "will be fetched", а не "built".
-    mdgreet.url = "github:MOIS3Y/mdgreet";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
