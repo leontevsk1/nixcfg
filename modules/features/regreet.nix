@@ -8,9 +8,12 @@
     }:
 
     let
-      # Обои и GTK-палитра Noctalia лежат в репозитории (greeter-пользователь не
-      # читает $HOME); обновляются скриптом ./regreet/sync.sh
-      wallpaper = ./regreet/wallpaper.jpg;
+      # Живые обои и GTK-палитра Noctalia: хук Noctalia (см. ./regreet/sync.sh)
+      # кладёт их сюда без пересборки (greeter-пользователь не читает $HOME).
+      # Копии в репозитории — запасные: tmpfiles копирует их, только если файла нет
+      themeDir = "/var/lib/regreet-theme";
+      fallbackWallpaper = ./regreet/wallpaper.jpg;
+      fallbackCss = ./regreet/noctalia.css;
       bg = "#131314";
 
       # Минимальный niri только для грейтера: без биндов, regreet на весь экран,
@@ -60,10 +63,9 @@
           name = "Inter";
           size = 11;
         };
-        extraCss = builtins.readFile ./regreet/noctalia.css;
         settings = {
           background = {
-            path = "${wallpaper}";
+            path = "${themeDir}/wallpaper";
             fit = "Cover";
           };
           GTK.application_prefer_dark_theme = true;
@@ -74,6 +76,28 @@
           };
         };
       };
+
+      environment.etc."greetd/regreet.css".source = lib.mkForce "${themeDir}/noctalia.css";
+
+      systemd.tmpfiles.settings."10-regreet-theme" =
+        let
+          common = {
+            user = "leont";
+            group = "users";
+            mode = "0644";
+          };
+        in
+        {
+          ${themeDir}.d = common // {
+            mode = "0755";
+          };
+          "${themeDir}/wallpaper".C = common // {
+            argument = "${fallbackWallpaper}";
+          };
+          "${themeDir}/noctalia.css".C = common // {
+            argument = "${fallbackCss}";
+          };
+        };
 
       # Plymouth оставляет последний кадр на экране до захвата DRM niri,
       # вместо сброса в консоль (fbcon) между сплэшем и грейтером
