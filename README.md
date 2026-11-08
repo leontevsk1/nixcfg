@@ -14,7 +14,10 @@
 - `modules/hosts/<host>/default.nix` — запись `flake.nixosConfigurations.<host>` (nixosSystem)
 - `modules/hosts/<host>/configuration.nix` — конфиг хоста
 - `modules/hosts/<host>/hardware-configuration.nix` — сгенерирован `nixos-generate-config`
-- `modules/features/*.nix` — переиспользуемые фичи (niri, noctalia); фичи хоста=<desktop>
+- `modules/features/*.nix` — переиспользуемые фичи:
+  - общие для обоих хостов: `browsers` (Firefox-политики + Chromium), `proxy` (Throne + gsettings для System Proxy),
+    `cli-tools` (терминальный стек, neovim, kitty), `fonts`; база системы — `common`
+  - tecno-only: `niri`, `noctalia`, `regreet`, `thunar`
 - `flake.nix` — inputs (nixpkgs-unstable, flake-parts, import-tree, wrapper-modules)
 
 ## Дисциплина
@@ -24,6 +27,12 @@
 - Применение: `sudo nixos-rebuild switch --flake ~/nixcfg#<host>`
 - Поколения: configurationLimit = 5 + gc daily `--delete-generations +5`.
 - Полные грабли — скилл `nixos-rebuild-guard` и `INSIGHTS.md` в репо дотфайлов hyprdev.
+
+## Firefox и прокси
+
+- В `browsers.nix` только приватность и прокси; расширения, профиль, UI и группы вкладок настраиваются в самом браузере.
+- Прокси системный (`network.proxy.type = 5`): активен, только пока в Throne включён System Proxy
+  (пишет в gsettings `org.gnome.system.proxy`, поэтому модуль `proxy` ставит glib и схемы).
 
 ## Файловый менеджер и диалоги файлов (tecno)
 
