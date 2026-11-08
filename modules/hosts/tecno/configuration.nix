@@ -11,6 +11,10 @@
       imports = [
         # Include the results of the hardware scan.
         self.nixosModules.commonConfiguration
+        self.nixosModules.browsers
+        self.nixosModules.cliTools
+        self.nixosModules.fonts
+        self.nixosModules.proxy
         self.nixosModules.tecnoHardware
         self.nixosModules.niri
         self.nixosModules.thunar
@@ -72,108 +76,6 @@
       };
       # programs.adb.enable = true; - no needed more in nixOs
 
-      # Firefox: декларативная приватность (Enterprise Policies, applied at each start).
-      # Философия: без урезания функционала — cookies НЕ чистятся, звонки/загрузки работают.
-      # Ключи с точками — ОБЯЗАТЕЛЬНО в кавычках (иначе Nix строит вложенные attrsets).
-      programs.firefox = {
-        enable = true;
-        preferencesStatus = "user";
-        preferences = {
-          # --- Телеметрия и отправка данных ---
-          "toolkit.telemetry.unified" = false;
-          "toolkit.telemetry.enabled" = false;
-          "datareporting.policy.dataSubmissionEnabled" = false;
-          "datareporting.healthreport.uploadEnabled" = false;
-          "browser.ping-centre.telemetry" = false;
-          "browser.newtabpage.activity-stream.feeds.telemetry" = false;
-          "browser.newtabpage.activity-stream.telemetry" = false;
-          "browser.newtabpage.activity-stream.healthreport.uploadEnabled" = false;
-          "app.shield.optoutstudies.enabled" = false;
-          "app.normandy.enabled" = false;
-          "app.normandy.api_url" = "";
-          "browser.discovery.enabled" = false;
-          "extensions.htmlaboutaddons.recommendations.enabled" = false;
-          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
-          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
-
-          # --- Спонсорский контент и рекомендации ---
-          "browser.newtabpage.activity-stream.showSponsored" = false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-          "browser.urlbar.quicksuggest.dataCollection.enabled" = false;
-          "browser.urlbar.suggest.quicksuggest.sponsored" = false;
-          "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
-
-          # --- Преждевременные соединения (утечки keystrokes/URL) ---
-          "browser.urlbar.speculativeConnect.enabled" = false;
-          "browser.urlbar.suggest.searches" = false; # подсказки поиска в адресной строке
-          "browser.search.suggest.enabled" = false;
-          "network.prefetch-next" = false;
-          "network.dns.disablePrefetch" = true;
-          "network.predictor.enabled" = false;
-          "network.http.speculative-parallel-limit" = 0;
-          "network.connectivity-service.enabled" = false;
-          "network.captive-portal-service.enabled" = false; # авто-детект captive wifi выключен
-          "browser.region.update.enabled" = false;
-
-          # --- SafeBrowsing: локальная защита остаётся, отправка URL/files в Google — нет ---
-          "browser.safebrowsing.downloads.remote.enabled" = false;
-          "browser.safebrowsing.downloads.remote.url" = "";
-          "browser.safebrowsing.provider.google4.dataSharing.enabled" = false;
-          "browser.safebrowsing.provider.google4.dataSharingURL" = "";
-          "browser.safebrowsing.provider.google.dataSharing.enabled" = false;
-
-          # --- Прокси детерминированно через Throne, DNS через прокси ---
-          "network.proxy.type" = 1;
-          "network.proxy.share_proxy_settings" = true;
-          "network.proxy.http" = "127.0.0.1";
-          "network.proxy.http_port" = 2080;
-          "network.proxy.socks" = "127.0.0.1";
-          "network.proxy.socks_port" = 2080;
-          "network.proxy.socks_version" = 5;
-          "network.proxy.socks_remote_dns" = true;
-          "network.proxy.no_proxies_on" = "localhost, 127.0.0.1";
-
-          # --- DoH в браузере выключен явно (резолв — через Throne/VPS) ---
-          "network.trr.mode" = 0;
-          "network.trr.uri" = "";
-
-          # --- HTTPS-Only ---
-          "dom.security.https_only_mode" = true;
-          "dom.security.https_only_mode_send_http_background_request" = false;
-
-          # --- OCSP off: запросы к CA палят browsing; отзыв через CRLite ---
-          "security.OCSP.enabled" = 0;
-          "security.OCSP.require" = false;
-
-          # --- WebRTC: звонки работают, локальные IP не светятся ---
-          "media.peerconnection.ice.no_host" = true;
-          "media.peerconnection.ice.default_address_only" = true;
-
-          # --- Прочие утечки ---
-          "geo.enabled" = false; # нужен гео на сайте — вернуть true
-          "dom.battery.enabled" = false;
-          "browser.uitour.enabled" = false;
-          "browser.uitour.url" = "";
-          "browser.sessionstore.privacy_level" = 2; # формы в session restore не пишутся
-          "privacy.globalprivacycontrol.enabled" = true; # GPC-сигнал
-          "privacy.globalprivacycontrol.webexposed" = true;
-          "network.auth.subresource-http-auth-allow" = 1;
-          "extensions.pocket.enabled" = false;
-
-          # --- ETP Strict (трекеры, браузерная антифингерпринт-защита) ---
-          "browser.contentblocking.category" = "strict";
-        };
-      };
-      programs.throne = {
-        enable = true;
-        tunMode.enable = true;
-        # Optional: enable setuid if the default capabilities method fails
-        # tunMode.setuid = true;
-      };
-      # yazi: БЕЗ programs.yazi модуля — он всегда экспортирует YAZI_CONFIG_HOME
-      # в /nix/store, из-за чего ~/.config/yazi (дотфайлы hyprdev) игнорируется.
-      # Чистый пакет читает ~/.config/yazi как обычно.
-
       # List packages installed in system profile.
       # You can use https://search.nixos.org/ to find more packages (and options).
       environment.systemPackages = with pkgs; [
@@ -182,21 +84,16 @@
             psutil
           ]
         ))
-        yazi # файловый менеджер (TOML-конфиг из ~/.config/yazi, flavors в дотфайлах)
         # breeze-hacked-cursor-theme # курсорная тема (иконки через pathsToLink)
         kdePackages.breeze # курсоры breeze_cursors (стоковый Breeze)
         kdePackages.qt6ct # Qt6-приложения: тема через QT_QPA_PLATFORMTHEME (стиль Fusion, схема noctalia)
-        yadm # менеджер дотфайлов (XDG: ~/.config/yadm)
-        glib # gsettings CLI: Throne пишет системный прокси через gsettings (org.gnome.system.proxy), Firefox его читает
         polkit_gnome # polkit-агент: диалоги авторизации (монтирование, systemd), стартует из niri
-        gsettings-desktop-schemas # схемы org.gnome.*: без них gsettings падает с "No schemas installed"
         telegram-desktop # мессенджер (Qt6)
         # rustdesk удалён: при каждом обновлении норовил собираться из исходников
         # (Rust-сборка съедает всю RAM) и перегревал ноут. Нужен разово —
         # `nix run nixpkgs#rustdesk` при рабочей сети ставится из кэша.
         bleachbit # очистка системы
         transmission_4-gtk # торрент-клиент (заодно — чистый Qt6-тест тем)
-        psmisc # killall/pstree — раньше killall отсутствовал и ломал диагностику процессов
         loupe # просмотрщик изображений (GNOME)
         zathura # просмотрщик PDF/ps/djvu (pdf-mupdf включён по умолчанию)
         wl-clipboard # wl-copy/wl-paste: без них opencode не может вставить изображение из буфера (Ctrl+V)
@@ -209,38 +106,21 @@
         gh # GitHub CLI: для агентов (GitHub-MCP отвергнут в пользу CLI — у моделей лучше данные на gh)
         brightnessctl # биндинги XF86MonBrightness в niri ссылаются на него
         wev # Wayland event viewer: отладка Fn-клавиш
-        wget
-        kitty
-        eza
         tree-sitter # nvim-treesitter (branch main): компиляция парсеров
         gcc # tree-sitter: сборка C-расширений парсеров
         nodejs # некоторые плагины nvim хотят node
-        ripgrep
-        fzf
-        fd
-        bat
-        zoxide # zsh: smart cd
-        starship # zsh: prompt
         fcitx5 # im-switch.nvim: авто-раскладка в nvim (fcitx5-remote)
         # opencode # бинарник в ~/.local/bin (v2.2.5), nixpkgs отстаёт — держим ручной
-        git
         adw-gtk3 # GTK тема (тёмная, синхронизирована с noctalia)
         papirus-icon-theme # иконки (Papirus-Dark)
-        fastfetch
-        lazygit
-        btop
-        chromium
         typst
         ddcutil
         zed-editor
         libreoffice
         uv
-        dnsutils
         nmap
         code2prompt
         (mpv.override { scripts = [ mpvScripts.mpris ]; }) # playback + MPRIS (mpv-mpris)
-        jq # JSON parsing in YouTube API requests
-        curl # YouTube API and thumbnail requests
         netcat-openbsd # nc -U unix-socket IPC with mpv (traditional/busybox nc won't work)
         universal-android-debloater
         android-tools
@@ -255,10 +135,6 @@
         herdr
         planner
       ];
-
-      programs.neovim.enable = true;
-      programs.neovim.defaultEditor = true;
-      environment.variables.TERMINAL = "kitty";
 
       # GTK/QT — синхронизация с Noctalia (adw-gtk3-dark + Papirus-Dark + Inter, breeze_cursors курсор)
       # NixOS-модулей типа gtk.gtk3 нет (это опции home-manager), поэтому
@@ -284,7 +160,6 @@
         gtk-cursor-theme-name=breeze_cursors
         gtk-cursor-theme-size=16
       '';
-      programs.dconf.enable = true;
       environment.variables.GTK_THEME = "adw-gtk3-dark";
       # ВАЖНО: Qt 6.11 НЕ парсит "qt5ct;qt6ct" через ';' — вся строка не матчится
       # с ключами плагина и платформенная тема молча не загружается (светлые окна).
@@ -313,23 +188,11 @@
         "/run/current-system/sw/lib/qt-6/plugins"
       ];
 
-      fonts.fontconfig.enable = true;
-
+      # Шрифты Fira Code / Droid Sans Mono — только tecno; общие — в features/fonts.nix
       fonts.packages = with pkgs; [
         nerd-fonts.fira-code
         nerd-fonts.droid-sans-mono
-        nerd-fonts.jetbrains-mono
-        inter
-        # Глифы для статус-баров/интерфейсов (Noctalia, nvim, starship):
-        nerd-fonts.symbols-only # Nerd Icons (символьный шрифт)
-        material-symbols # Material Symbols
-        material-design-icons # Material Design Icons (MDI)
-        font-awesome # Font Awesome 7
-        corefonts
       ];
-
-      fonts.fontconfig.defaultFonts.sansSerif = [ "Inter" ];
-      fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono Nerd Font" ];
 
       # Fcitx5 — ЕДИНЫЙ механизм раскладок во всей системе.
       # Win+Space = переключение (TriggerKeys), us/ru в profile.

@@ -12,6 +12,10 @@
       imports = [
         # Include the results of the hardware scan.
         self.nixosModules.commonConfiguration
+        self.nixosModules.browsers
+        self.nixosModules.cliTools
+        self.nixosModules.fonts
+        self.nixosModules.proxy
         self.nixosModules.forgeHardware
       ];
       # UEFI Shell — нужен для поиска device handle Windows ESP
@@ -69,18 +73,9 @@
       # Enable touchpad support (enabled default in most desktopManager).
       # services.libinput.enable = true;
 
-      programs.firefox.enable = true;
-      programs.throne.enable = true;
-
       # List packages installed in system profile.
       # You can use https://search.nixos.org/ to find more packages (and options).
       environment.systemPackages = with pkgs; [
-        neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-        wget
-        curl
-        git
-        btop
-        chromium
         alacritty
       ];
 
