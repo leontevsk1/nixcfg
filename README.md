@@ -17,7 +17,7 @@
 - `modules/features/*.nix` — переиспользуемые фичи:
   - общие для обоих хостов: `browsers` (Firefox-политики + Chromium), `proxy` (Throne + gsettings для System Proxy),
     `cli-tools` (терминальный стек, neovim, kitty), `fonts`; база системы — `common`
-  - tecno-only: `niri`, `noctalia`, `regreet`, `thunar`
+  - tecno-only: `niri`, `noctalia`, `noctalia-greeter`, `thunar`
 - `flake.nix` — inputs (nixpkgs-unstable, flake-parts, import-tree, wrapper-modules)
 
 ## Дисциплина
@@ -46,6 +46,42 @@
 - После применения NixOS-конфига выйти из сессии и войти снова, чтобы старый
   процесс Nautilus освободил `org.freedesktop.FileManager1` и порталы перечитали
   настройки. Thunar не предоставляет диалоги «Открыть/Сохранить»: их рисует GTK.
+
+## Greeter (tecno): история и уроки
+
+Сейчас: штатный `services.displayManager.noctalia-greeter` из nixpkgs (`modules/features/noctalia-greeter.nix`).
+Путь: tuigreet → noctalia-greeter → mdgreet → regreet → снова noctalia-greeter.
+Из regreet вернулись на noctalia-greeter, потому что в regreet периодически не работал ввод
+(мышь/клавиатура), а причину найти не удалось.
+
+Что узнали:
+
+- **Greeter — это стек, а не приложение**: greetd → компоновщик → GTK/Slint-приложение. Каждый слой
+  может сломаться. У noctalia-greeter компоновщик свой и встроенный, у regreet/mdgreet мы сами
+  собирали обвязку (niri-конфиг, `dbus-run-session`, `swaybg`, `systemd-cat`, `plymouth --retain-splash`)
+  — лишние слои без выгоды.
+- **Предпочитать штатный модуль nixpkgs** собственной обвязке. Всё, что мы дописывали вокруг
+  greeter-а, — дополнительные точки отказа.
+- **Прерывистый баг ввода не ловится постфактум.** В «хороших» и «плохих» загрузках логи niri и
+  regreet совпадали построчно, ошибок ввода (libseat/libinput) не было. Если баг повторится у
+  другого greeter-а, диагностику (`niri msg event-stream` в журнал, debug-логи) надо включать
+  заранее, а не после сбоя. Не включать `WAYLAND_DEBUG` — в журнал попадут нажатия клавиш, в
+  том числе пароль.
+- **Проверять вид до перезагрузки**: `regreet --demo` с `XDG_CONFIG_HOME` на пустой каталог
+  (иначе GTK подхватит `~/.config/gtk-4.0`) и скриншот через `grim`. Демо не проверяет ввод,
+  автоматический вход и поведение при реальном старте — только внешний вид.
+- **Greeter-пользователь не читает `$HOME`.** Всё нужное ему (обои, палитра) должно лежать в
+  `/nix/store` или в `/var/lib/...`. Для «живых» файлов вне стора мы делали хук Noctalia +
+  `tmpfiles`, но если greeter умеет синхронизацию сам (Noctalia Greeter: Settings → Security →
+  Auto-Sync Greeter + `passwordlessSyncUsers`), этот хук не нужен.
+- **Input на собственном nixpkgs автора** (так было с mdgreet) выбивает пакет из бинарного кэша
+  и приводит к сборке Rust из исходников. Без кэша автора такие inputs не брать.
+- **Страховка при смене greeter-а**: применять через `boot`, не `switch`; в загрузчике
+  остаётся предыдущее поколение; на случай неработающего greeter-а — `Ctrl+Alt+F2` и вход с TTY.
+- **Не заявлять «готово» по проверке в демо.** Greeter реально проверяется только перезагрузкой.
+- **Если regreet когда-нибудь вернётся**: в `regreet --demo` верстка Material-стиля делается только
+  CSS-ом поверх GTK (размытие фона на нескольких мониторах не работает, заранее размытые обои
+  лежат в одном файле для `swaybg`); коммиты `ea61bdc`, `126a26a`, `750cdab` в истории.
 
 ## Связанные репозитории
 
