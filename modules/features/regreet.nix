@@ -12,7 +12,11 @@
       # кладёт их сюда без пересборки (greeter-пользователь не читает $HOME).
       # Копии в репозитории — запасные: tmpfiles копирует их, только если файла нет
       themeDir = "/var/lib/regreet-theme";
-      fallbackWallpaper = ./regreet/wallpaper.jpg;
+      # Обои заранее размыты (sync.sh делает то же самое): один и тот же файл
+      # показывает и regreet, и swaybg на остальных мониторах
+      fallbackWallpaper =
+        pkgs.runCommand "wallpaper-blur.jpg" { nativeBuildInputs = [ pkgs.imagemagick ]; }
+          "magick ${./regreet/wallpaper.jpg} -resize '1920x1920>' -gaussian-blur 0x14 -quality 90 $out";
       fallbackCss = ./regreet/noctalia.css;
       bg = "#131314";
 
@@ -39,6 +43,9 @@
           open-fullscreen true
         }
 
+        // regreet рисует фон только на одном мониторе; на остальных — те же обои
+        spawn-at-startup "${lib.getExe pkgs.swaybg}" "-i" "${themeDir}/wallpaper" "-m" "fill"
+
         spawn-sh-at-startup "${pkgs.dbus}/bin/dbus-run-session ${lib.getExe config.services.displayManager.regreet.package} ; ${lib.getExe pkgs.niri} msg action quit --skip-confirmation"
       '';
     in
@@ -63,7 +70,13 @@
           name = "Inter";
           size = 11;
         };
+        # палитра Noctalia подключается из живого файла, поверх — правки вида
+        extraCss = ''
+          @import url("file://${themeDir}/noctalia.css");
+          ${builtins.readFile ./regreet/tweaks.css}
+        '';
         settings = {
+          skip_selection = true;
           background = {
             path = "${themeDir}/wallpaper";
             fit = "Cover";
@@ -76,8 +89,6 @@
           };
         };
       };
-
-      environment.etc."greetd/regreet.css".source = lib.mkForce "${themeDir}/noctalia.css";
 
       systemd.tmpfiles.settings."10-regreet-theme" =
         let
@@ -107,7 +118,9 @@
       ];
 
       services.greetd.settings.default_session = {
-        command = "${lib.getExe pkgs.niri} --config ${niriConfig}";
+        # niri пишет логи в stdout, а greetd отдаёт грейтеру tty1 — без systemd-cat
+        # они мелькают на экране при старте
+        command = "${pkgs.systemd}/bin/systemd-cat -t niri-greeter ${lib.getExe pkgs.niri} --config ${niriConfig}";
         user = "greeter";
       };
     };

@@ -13,8 +13,10 @@ put() {
   mv -f "$dest/.$2.tmp" "$dest/$2"
 }
 
-put "$wall" wallpaper
-filtered="$(mktemp)"
-trap 'rm -f "$filtered"' EXIT
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+magick "$wall" -resize '1920x1920>' -gaussian-blur 0x14 -quality 90 "$tmp/wallpaper.jpg"
+put "$tmp/wallpaper.jpg" wallpaper
+filtered="$tmp/noctalia.css"
 grep -v -e '^@import url("noctalia-extensions.css")' -e 'App-scoped CSS' "$css" > "$filtered"
 put "$filtered" noctalia.css
