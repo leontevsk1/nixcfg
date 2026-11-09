@@ -119,7 +119,6 @@
         libreoffice
         uv
         nmap
-        code2prompt
         (mpv.override { scripts = [ mpvScripts.mpris ]; }) # playback + MPRIS (mpv-mpris)
         netcat-openbsd # nc -U unix-socket IPC with mpv (traditional/busybox nc won't work)
         universal-android-debloater
