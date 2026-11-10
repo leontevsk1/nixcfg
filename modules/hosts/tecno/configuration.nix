@@ -134,6 +134,7 @@
         herdr
         planner
         mailspring
+        zeroclaw
       ];
 
       # GTK/QT — синхронизация с Noctalia (adw-gtk3-dark + Papirus-Dark + Inter, breeze_cursors курсор)
