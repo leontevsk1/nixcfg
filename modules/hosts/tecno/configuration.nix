@@ -133,6 +133,7 @@
         imagemagick # `magick`: image.nvim (процессор magick_cli) для инлайн-диаграмм в kitty
         herdr
         planner
+        mailspring
       ];
 
       # GTK/QT — синхронизация с Noctalia (adw-gtk3-dark + Papirus-Dark + Inter, breeze_cursors курсор)
